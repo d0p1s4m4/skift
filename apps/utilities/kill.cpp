@@ -1,4 +1,3 @@
-#include <libsystem/io/Stream.h>
 #include <libsystem/json/Json.h>
 #include <libsystem/process/Process.h>
 #include <libsystem/utils/NumberParser.h>
@@ -18,12 +17,12 @@ int killall(String name)
 {
     if (name == "neko")
     {
-        stream_format(err_stream, "Don't kill nekos, your are a bad persone!\n");
+        System::errln("Don't kill nekos, your are a bad persone!");
     }
 
     if (name == "cat")
     {
-        stream_format(err_stream, "Don't kill cats, you monster!\n");
+        System::errln("Don't kill cats, you monster!");
     }
 
     auto processes = json::parse_file("/System/processes");

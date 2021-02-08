@@ -1,6 +1,4 @@
-#include <libsystem/core/CString.h>
-#include <libsystem/io/Stream.h>
-#include <libsystem/process/Process.h>
+#include <libsystem/io_new/Streams.h>
 #include <libutils/Path.h>
 
 int main(int argc, char **argv)
@@ -11,8 +9,7 @@ int main(int argc, char **argv)
         return PROCESS_FAILURE;
     }
 
-    auto path = Path::parse(argv[1]);
-    printf("%s\n", path.basename().cstring());
+    System::outln("{}", Path::parse(argv[1]).basename());
 
     return PROCESS_SUCCESS;
 }
