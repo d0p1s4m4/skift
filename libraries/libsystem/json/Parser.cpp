@@ -189,9 +189,9 @@ Value parse(const String &str)
     return parse(scan);
 };
 
-Value parse_file(const char *path)
+Value parse_file(String path)
 {
-    __cleanup(stream_cleanup) Stream *json_file = stream_open(path, OPEN_READ | OPEN_BUFFERED);
+    __cleanup(stream_cleanup) Stream *json_file = stream_open(path.cstring(), OPEN_READ | OPEN_BUFFERED);
 
     if (handle_has_error(json_file))
     {

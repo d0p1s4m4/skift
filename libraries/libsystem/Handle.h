@@ -6,7 +6,7 @@
 #include <libutils/ResultOr.h>
 #include <libutils/String.h>
 
-namespace system
+namespace System
 {
 
 class Handle
@@ -136,6 +136,11 @@ public:
             return Handle{connection_handle};
         }
     }
+
+    bool valid()
+    {
+        return _handle != HANDLE_INVALID_ID;
+    }
 };
 
-} // namespace system
+} // namespace System

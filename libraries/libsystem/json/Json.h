@@ -17,7 +17,7 @@ Value parse(const char *str, size_t size);
 
 Value parse(const String &str);
 
-Value parse_file(const char *path);
+Value parse_file(String path);
 
 void prettify(Prettifier &pretty, const Value &value);
 

@@ -7,12 +7,12 @@
 class FileWriter final : public Writer
 {
 private:
-    system::Handle _handle;
+    System::Handle _handle;
 
 public:
     FileWriter(const char *path);
     FileWriter(Path &path);
-    FileWriter(system::Handle &&handle);
+    FileWriter(System::Handle &&handle);
 
     virtual size_t length() override;
     virtual size_t position() override;
