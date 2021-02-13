@@ -4,35 +4,38 @@
 #include <libsystem/math/Math.h>
 #include <libutils/Strings.h>
 
-struct NumberFormat
+namespace System
+{
+
+struct NumberFormatter
 {
     int _base;
     int _precision;
     bool _capitalized;
 
-    static NumberFormat binary()
+    static NumberFormatter binary()
     {
         return {2, 4, false};
     }
 
-    static NumberFormat octal()
+    static NumberFormatter octal()
     {
         return {8, 4, false};
     }
 
-    static NumberFormat decimal()
+    static NumberFormatter decimal()
     {
         return {10, 4, false};
     }
 
-    static NumberFormat hexadecimal()
+    static NumberFormatter hexadecimal()
     {
         return {16, 4, false};
     }
 
-    NumberFormat capitalized()
+    NumberFormatter capitalized()
     {
-        NumberFormat copy = *this;
+        NumberFormatter copy = *this;
         copy._capitalized = true;
         return copy;
     }
@@ -96,11 +99,6 @@ struct NumberFormat
         return writer.write(buffer, i);
     }
 
-    ResultOr<size_t> format(System::Writer &writer, float value)
-    {
-        return format(writer, (double)value);
-    }
-
     ResultOr<size_t> format(System::Writer &writer, double value)
     {
         size_t written = 0;
@@ -142,3 +140,5 @@ struct NumberFormat
         return written;
     }
 };
+
+} // namespace System

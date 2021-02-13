@@ -4,8 +4,12 @@
 #    include <libsystem/math/Math.h>
 #endif
 
-#include <libutils/Scanner.h>
+#include <libsystem/io_new/Scanner.h>
 #include <libutils/Strings.h>
+#include <libutils/unicode/Codepoint.h>
+
+namespace System
+{
 
 static inline const char *scan_json_escape_sequence(Scanner &scan)
 {
@@ -108,80 +112,9 @@ static inline const char *scan_json_escape_sequence(Scanner &scan)
     return buffer;
 }
 
-static inline unsigned int scan_uint(Scanner &scan, int base)
-{
-    assert(base >= 2 && base <= 16);
-
-    unsigned int v = 0;
-    while (scan.current_is(Strings::LOWERCASE_XDIGITS, base))
-    {
-        v *= base;
-        v += scan.current() - '0';
-        scan.foreward();
-    }
-
-    return v;
-}
-
-static inline int scan_int(Scanner &scan, int base)
-{
-    assert(base >= 2 && base <= 16);
-
-    int sign = 1;
-
-    if (scan.current_is("-"))
-    {
-        sign = -1;
-    }
-
-    scan.skip("+-");
-
-    int digits = 0;
-
-    while (scan.current_is(Strings::LOWERCASE_XDIGITS, base))
-    {
-        digits *= base;
-        digits += scan.current() - '0';
-        scan.foreward();
-    }
-
-    return digits * sign;
-}
-
-#ifndef __KERNEL__
-
-static inline double scan_float(Scanner &scan)
-{
-    int ipart = scan_int(scan, 10);
-
-    double fpart = 0;
-
-    if (scan.skip('.'))
-    {
-        double multiplier = 0.1;
-
-        while (scan.current_is(Strings::DIGITS))
-        {
-            fpart += multiplier * (scan.current() - '0');
-            multiplier *= 0.1;
-            scan.foreward();
-        }
-    }
-
-    int exp = 0;
-
-    if (scan.current_is("eE"))
-    {
-        scan.foreward();
-        exp = scan_int(scan, 10);
-    }
-
-    return (ipart + fpart) * pow(10, exp);
-}
-
-#endif
-
 static inline void scan_skip_utf8bom(Scanner &scan)
 {
     scan.skip_word("\xEF\xBB\xBF");
 }
+
+} // namespace System

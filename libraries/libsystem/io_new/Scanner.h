@@ -7,14 +7,13 @@
 namespace System
 {
 
-template <typename TReader>
 class Scanner final
 {
 private:
     static constexpr int PEEK_SIZE = 16;
 
-    TReader _reader;
-    utils::InlineRingBuffer<uint8_t, 16> _peek{};
+    Reader &_reader;
+    utils::InlineRingBuffer<uint8_t, PEEK_SIZE> _peek{};
     bool _is_end_of_file = false;
 
     void refill()
@@ -31,7 +30,8 @@ private:
     }
 
 public:
-    Scanner(TReader reader) : _reader(reader)
+    Scanner(Reader &reader)
+        : _reader{reader}
     {
     }
 

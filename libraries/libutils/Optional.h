@@ -137,6 +137,16 @@ public:
         }
     }
 
+    T else(T default)
+    {
+        if (_present)
+        {
+            return _value;
+        }
+
+        return default;
+    }
+
     operator bool() const { return _present; }
 
     T &operator*() { return value(); }

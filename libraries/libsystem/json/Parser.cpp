@@ -1,16 +1,11 @@
-#include <libsystem/Assert.h>
-#include <libsystem/core/CString.h>
-#include <libsystem/io/Stream.h>
-#include <libsystem/json/Json.h>
-#include <libsystem/unicode/Codepoint.h>
-#include <libsystem/utils/NumberParser.h>
-#include <libutils/Scanner.h>
-#include <libutils/ScannerUtils.h>
-#include <libutils/StringBuilder.h>
-#include <libutils/Strings.h>
+#pragma once
+
+#include <libutils/json/Value.h>
 
 namespace json
 {
+
+Value value(Scanner &scan);
 
 static Value value(Scanner &scan);
 
@@ -173,32 +168,6 @@ static Value value(Scanner &scan)
 
 Value parse(Scanner &scan)
 {
-    scan_skip_utf8bom(scan);
-    return value(scan);
-}
-
-Value parse(const char *str, size_t size)
-{
-    StringScanner scan{str, size};
-    return parse(scan);
-};
-
-Value parse(const String &str)
-{
-    StringScanner scan{str.cstring(), str.length()};
-    return parse(scan);
-};
-
-Value parse_file(String path)
-{
-    __cleanup(stream_cleanup) Stream *json_file = stream_open(path.cstring(), OPEN_READ | OPEN_BUFFERED);
-
-    if (handle_has_error(json_file))
-    {
-        return nullptr;
-    }
-
-    StreamScanner scan{json_file};
     scan_skip_utf8bom(scan);
     return value(scan);
 }

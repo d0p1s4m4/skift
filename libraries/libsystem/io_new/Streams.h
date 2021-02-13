@@ -149,4 +149,3 @@ template <Formatable... Args>
 static ResultOr<size_t> logln(const char *fmt, Args... args) { return println(log(), fmt, forward<Args>(args)...); }
 
 } // namespace System
-
