@@ -1,6 +1,6 @@
 #include <libmarkup/Markup.h>
 #include <libsystem/Logger.h>
-#include <libutils/NumberParser.h>
+#include <libutils/NumberScanner.h>
 #include <libutils/Scanner.h>
 #include <string.h>
 

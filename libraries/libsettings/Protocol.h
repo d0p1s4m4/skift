@@ -1,7 +1,7 @@
 #pragma once
 
 #include <libipc/Peer.h>
-#include <libutils/json/Json.h>
+#include <libjson/Json.h>
 
 #include <libsettings/Path.h>
 
@@ -24,7 +24,7 @@ struct Message
 
     Type type;
     Optional<Path> path;
-    Optional<json::Value> payload;
+    Optional<Json::Value> payload;
 };
 
 struct Protocol

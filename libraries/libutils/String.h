@@ -5,8 +5,8 @@
 #include <libutils/RefPtr.h>
 #include <libutils/StringStorage.h>
 
-#include <libsystem/io_new/Format.h>
-#include <libsystem/io_new/MemoryWriter.h>
+#include <libio/Format.h>
+#include <libio/MemoryWriter.h>
 
 class String
 {

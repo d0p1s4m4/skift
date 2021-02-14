@@ -1,11 +1,11 @@
 #include <abi/Paths.h>
 
+#include <libio/Streams.h>
 #include <libsystem/Result.h>
 #include <libsystem/cmdline/CMDLine.h>
 #include <libsystem/io/Connection.h>
 #include <libsystem/io/File.h>
 #include <libsystem/io/Socket.h>
-#include <libsystem/io_new/Streams.h>
 
 #include "compositor/Protocol.h"
 
@@ -78,8 +78,8 @@ int gfxmode_get(Stream *framebuffer_device)
     }
 
     System::outln("Height: {}\nWidth: {}\n",
-           framebuffer_info.width,
-           framebuffer_info.height);
+                  framebuffer_info.width,
+                  framebuffer_info.height);
 
     return PROCESS_SUCCESS;
 }

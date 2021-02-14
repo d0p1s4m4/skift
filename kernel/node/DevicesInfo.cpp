@@ -1,9 +1,9 @@
 
+#include <libjson/Json.h>
 #include <libsystem/Logger.h>
 #include <libsystem/Result.h>
-#include <string.h>
-#include <libutils/json/Json.h>
 #include <libsystem/math/MinMax.h>
+#include <string.h>
 
 #include "kernel/devices/Devices.h"
 #include "kernel/filesystem/Filesystem.h"
@@ -17,10 +17,10 @@ FsDeviceInfo::FsDeviceInfo() : FsNode(FILE_TYPE_DEVICE)
 
 Result FsDeviceInfo::open(FsHandle *handle)
 {
-    json::Value::Array root{};
+    Json::Value::Array root{};
 
     device_iterate([&](RefPtr<Device> device) {
-        json::Value::Object device_object{};
+        Json::Value::Object device_object{};
 
         auto *driver = driver_for(device->address());
 
@@ -39,7 +39,7 @@ Result FsDeviceInfo::open(FsHandle *handle)
     });
 
     Prettifier pretty{};
-    json::prettify(pretty, root);
+    Json::prettify(pretty, root);
 
     handle->attached = pretty.finalize().underlying_storage().give_ref();
     handle->attached_size = reinterpret_cast<StringStorage *>(handle->attached)->length();

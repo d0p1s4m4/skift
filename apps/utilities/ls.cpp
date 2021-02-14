@@ -1,10 +1,10 @@
 
+#include <libio/Directory.h>
+#include <libio/Streams.h>
 #include <libsystem/Logger.h>
 #include <libsystem/Result.h>
 #include <libsystem/cmdline/CMDLine.h>
 #include <libsystem/io/Stream.h>
-#include <libsystem/io_new/Directory.h>
-#include <libsystem/io_new/Streams.h>
 
 static bool option_all = false;
 static bool option_list = false;

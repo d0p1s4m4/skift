@@ -1,12 +1,12 @@
+#include <libio/Directory.h>
 #include <libsystem/io/File.h>
-#include <libsystem/io_new/Directory.h>
 
 #include "panel/model/MenuEntry.h"
 
 namespace panel
 {
 
-MenuEntry::MenuEntry(const json::Value &value)
+MenuEntry::MenuEntry(const Json::Value &value)
 {
     value.with("name", [this](auto &v) {
         name = v.as_string();
@@ -55,7 +55,7 @@ Vector<MenuEntry> MenuEntry::load()
         File manifest_file{path};
         if (manifest_file.exist())
         {
-            entries->emplace_back(json::parse_file(path));
+            entries->emplace_back(Json::parse_file(path));
         }
     }
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <libutils/json/Json.h>
+#include <libjson/Json.h>
 #include <libwidget/model/TableModel.h>
 
 namespace task_manager
@@ -9,7 +9,7 @@ namespace task_manager
 class TaskModel : public TableModel
 {
 private:
-    json::Value _data;
+    Json::Value _data;
 
 public:
     int rows() override;

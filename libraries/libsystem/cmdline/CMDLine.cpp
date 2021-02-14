@@ -5,7 +5,7 @@
 #include <libsystem/cmdline/CMDLine.h>
 #include <libsystem/io/Stream.h>
 #include <libsystem/process/Process.h>
-#include <libutils/NumberParser.h>
+#include <libutils/NumberScanner.h>
 #include <stdio.h>
 
 /* --- Private functions ---------------------------------------------------- */

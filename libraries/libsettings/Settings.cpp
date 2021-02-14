@@ -10,7 +10,7 @@ namespace Settings
 static Vector<Watcher *> _watchers;
 static OwnPtr<ServerConnection> _server;
 
-static void notify_watchers(const Path &path, const json::Value &value)
+static void notify_watchers(const Path &path, const Json::Value &value)
 {
     for (size_t i = 0; i < _watchers.count(); i++)
     {
@@ -76,7 +76,7 @@ void unregister_watcher(Watcher &watcher)
     }
 }
 
-Optional<json::Value> read(const Path path)
+Optional<Json::Value> read(const Path path)
 {
     Message message;
 
@@ -93,7 +93,7 @@ Optional<json::Value> read(const Path path)
     return result_or_response->payload;
 }
 
-bool write(const Path path, json::Value value)
+bool write(const Path path, Json::Value value)
 {
     Message message;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <libsystem/io_new/Streams.h>
+#include <libio/Streams.h>
 #include <libsystem/process/Process.h>
 
 #include <libutils/Callback.h>

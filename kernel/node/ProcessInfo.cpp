@@ -1,9 +1,9 @@
 
+#include <libjson/Json.h>
 #include <libsystem/Logger.h>
 #include <libsystem/Result.h>
-#include <string.h>
-#include <libutils/json/Json.h>
 #include <libsystem/math/MinMax.h>
+#include <string.h>
 
 #include "kernel/filesystem/Filesystem.h"
 #include "kernel/interrupts/Interupts.h"
@@ -16,12 +16,12 @@ FsProcessInfo::FsProcessInfo() : FsNode(FILE_TYPE_DEVICE)
 {
 }
 
-static Iteration serialize_task(json::Value::Array *list, Task *task)
+static Iteration serialize_task(Json::Value::Array *list, Task *task)
 {
     if (task->id == 0)
         return Iteration::CONTINUE;
 
-    json::Value::Object task_object{};
+    Json::Value::Object task_object{};
 
     task_object["id"] = task->id;
     task_object["name"] = task->name;
@@ -38,12 +38,12 @@ static Iteration serialize_task(json::Value::Array *list, Task *task)
 
 Result FsProcessInfo::open(FsHandle *handle)
 {
-    json::Value::Array list{};
+    Json::Value::Array list{};
 
     task_iterate(&list, (TaskIterateCallback)serialize_task);
 
     Prettifier pretty{};
-    json::prettify(pretty, list);
+    Json::prettify(pretty, list);
 
     handle->attached = pretty.finalize().underlying_storage().give_ref();
     handle->attached_size = reinterpret_cast<StringStorage *>(handle->attached)->length();

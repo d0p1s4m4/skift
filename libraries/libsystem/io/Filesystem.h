@@ -15,3 +15,20 @@ Result filesystem_mkpipe(const char *path);
 Result filesystem_rename(const char *old_path, const char *new_path);
 
 bool filesystem_exist(const char *path, FileType type);
+
+namespace System
+{
+
+Result link(const char *oldpath, const char *newpath);
+
+Result unlink(const char *path);
+
+Result mkdir(const char *path);
+
+Result mkpipe(const char *path);
+
+Result rename(const char *old_path, const char *new_path);
+
+bool exist(const char *path, FileType type);
+
+} // namespace System

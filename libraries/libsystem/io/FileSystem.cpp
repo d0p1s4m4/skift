@@ -1,9 +1,10 @@
-#include <libsystem/io/Filesystem.h>
-#include <libsystem/io/Stream.h>
-
 #include <libsystem/core/Plugs.h>
+#include <libsystem/io/Filesystem.h>
 
-bool filesystem_exist(const char *path, FileType type)
+namespace System
+{
+
+bool exist(const char *path, FileType type)
 {
     Handle handle;
     __plug_handle_open(&handle, path, 0);
@@ -31,3 +32,5 @@ bool filesystem_exist(const char *path, FileType type)
     __plug_handle_close(&handle);
     return true;
 }
+
+} // namespace System

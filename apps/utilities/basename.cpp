@@ -1,4 +1,4 @@
-#include <libsystem/io_new/Streams.h>
+#include <libio/Streams.h>
 #include <libutils/Path.h>
 
 int main(int argc, char **argv)

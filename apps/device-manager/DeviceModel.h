@@ -1,12 +1,12 @@
 #pragma once
 
-#include <libutils/json/Json.h>
+#include <libjson/Json.h>
 #include <libwidget/model/TableModel.h>
 
 class DeviceModel : public TableModel
 {
 private:
-    json::Value _data = nullptr;
+    Json::Value _data = nullptr;
 
 public:
     int rows() override;

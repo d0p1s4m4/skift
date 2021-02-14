@@ -1,5 +1,5 @@
 
-#include <libsystem/io_new/Streams.h>
+#include <libio/Streams.h>
 
 int main(int argc, const char *argv[])
 {

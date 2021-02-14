@@ -1,7 +1,7 @@
 #include <string.h>
 
 #include <libgraphic/Color.h>
-#include <libutils/NumberParser.h>
+#include <libutils/NumberScanner.h>
 #include <libutils/Scanner.h>
 #include <libutils/ScannerUtils.h>
 

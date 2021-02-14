@@ -26,7 +26,7 @@ Result Protocol::encode_message(Connection *connection, const Message &message)
     if (message.payload)
     {
         Prettifier pretty;
-        json::prettify(pretty, *message.payload);
+        Json::prettify(pretty, *message.payload);
         payload_buffer = pretty.finalize();
     }
 
@@ -105,7 +105,7 @@ ResultOr<Message> Protocol::decode_message(Connection *connection)
             return handle_get_error(connection);
         }
 
-        message.payload = json::parse(buffer, header.payload_length);
+        message.payload = Json::parse(buffer, header.payload_length);
         delete[] buffer;
     }
 

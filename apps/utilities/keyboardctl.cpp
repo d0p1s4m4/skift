@@ -3,10 +3,10 @@
 
 #include <libutils/ArgParse.h>
 
-#include <libsystem/io_new/Copy.h>
-#include <libsystem/io_new/Directory.h>
-#include <libsystem/io_new/File.h>
-#include <libsystem/io_new/Streams.h>
+#include <libio/Copy.h>
+#include <libio/Directory.h>
+#include <libio/File.h>
+#include <libio/Streams.h>
 
 int loadkey_list_keymap()
 {

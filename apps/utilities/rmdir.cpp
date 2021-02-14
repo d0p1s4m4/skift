@@ -1,7 +1,7 @@
+#include <libio/Directory.h>
+#include <libio/Streams.h>
 #include <libsystem/cmdline/CMDLine.h>
 #include <libsystem/io/Filesystem.h>
-#include <libsystem/io_new/Directory.h>
-#include <libsystem/io_new/Streams.h>
 #include <libutils/Path.h>
 #include <stdio.h>
 

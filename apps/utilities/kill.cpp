@@ -1,7 +1,7 @@
+#include <libjson/Json.h>
 #include <libsystem/process/Process.h>
 #include <libutils/ArgParse.h>
-#include <libutils/NumberParser.h>
-#include <libutils/json/Json.h>
+#include <libutils/NumberScanner.h>
 
 int kill(int pid)
 {
@@ -25,7 +25,7 @@ int killall(String name)
         System::errln("Don't kill cats, you monster!");
     }
 
-    auto processes = json::parse_file("/System/processes");
+    auto processes = Json::parse_file("/System/processes");
 
     for (size_t i = 0; i < processes.length(); i++)
     {

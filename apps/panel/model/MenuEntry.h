@@ -1,7 +1,7 @@
 #pragma once
 
 #include <libgraphic/Icon.h>
-#include <libutils/json/Json.h>
+#include <libjson/Json.h>
 #include <libutils/String.h>
 #include <libutils/Vector.h>
 
@@ -15,7 +15,7 @@ struct MenuEntry
     RefPtr<Icon> icon;
     String command;
 
-    MenuEntry(const json::Value &value);
+    MenuEntry(const Json::Value &value);
 
     static Vector<MenuEntry> load();
 };

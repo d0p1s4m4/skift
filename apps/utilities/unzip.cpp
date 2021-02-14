@@ -1,8 +1,8 @@
 
 #include <libfile/ZipArchive.h>
+#include <libio/Streams.h>
 #include <libsystem/io/File.h>
 #include <libsystem/io/Filesystem.h>
-#include <libsystem/io_new/Streams.h>
 #include <libutils/ArgParse.h>
 #include <libutils/Path.h>
 

@@ -324,7 +324,7 @@ Result initialize(int argc, char **argv)
 
     _setting_theme = own<Settings::Setting>(
         "appearance:widgets.theme",
-        [](const json::Value &value) {
+        [](const Json::Value &value) {
             auto new_theme = value.as_string();
 
             char buffer[256];
@@ -339,7 +339,7 @@ Result initialize(int argc, char **argv)
 
     _setting_wireframe = own<Settings::Setting>(
         "appearance:widgets.wireframe",
-        [](const json::Value &value) {
+        [](const Json::Value &value) {
             _wireframe = value.as_bool();
             for (size_t i = 0; i < _windows.count(); i++)
             {

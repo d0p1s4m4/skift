@@ -1,7 +1,7 @@
 #include <abi/Syscalls.h>
 
+#include <libio/Streams.h>
 #include <libsystem/BuildInfo.h>
-#include <libsystem/io_new/Streams.h>
 #include <libsystem/system/System.h>
 #include <libutils/ArgParse.h>
 

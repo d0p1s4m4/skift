@@ -3,14 +3,6 @@
 #include <libsystem/Common.h>
 #include <libsystem/Result.h>
 
-void memory_zero(void *where, size_t how_many);
-
-void memory_set(void *where, char what, size_t how_many);
-
-void memory_copy(void *from, size_t from_size, void *to, size_t to_size);
-
-void memory_move(void *from, size_t from_size, void *to, size_t to_size);
-
 Result memory_alloc(size_t size, uintptr_t *out_address);
 
 Result memory_free(uintptr_t address);

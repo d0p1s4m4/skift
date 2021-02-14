@@ -1,9 +1,9 @@
 #include <assert.h>
+#include <stdio.h>
+
 #include <libsystem/io/Stream.h>
 #include <libsystem/process/Process.h>
-#include <libutils/NumberParser.h>
-#include <assert.h>
-#include <stdio.h>
+#include <libutils/NumberScanner.h>
 
 #include "shell/Shell.h"
 
