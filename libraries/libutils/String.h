@@ -14,13 +14,11 @@ private:
     RefPtr<StringStorage> _buffer;
 
 public:
-    template <System::Formatable... Args>
+    template <IO::Formatable... Args>
     static String format(const char *fmt, Args... args)
     {
-        StringScanner scan{fmt, strlen(fmt)};
-        System::MemoryWriter memory;
-
-        System::format(memory, scan, forward<Args>(args)...);
+        IO::MemoryWriter memory{strlen(fmt)};
+        IO::format(memory, fmt, forward<Args>(args)...);
 
         return memory.string();
     }

@@ -2,6 +2,7 @@
 
 #include <libio/Scanner.h>
 
+#include <libio/MemoryReader.h>
 #include <libio/Writer.h>
 
 class String;
@@ -203,7 +204,10 @@ static inline ResultOr<size_t> format(Writer &writer, Scanner &scanner, First fi
 template <Formatable... Args>
 static inline ResultOr<size_t> format(Writer &writer, const char *fmt, Args... args)
 {
-    StringScanner scan{fmt, strlen(fmt)};
+    Slice slice{fmt, strlen(fmt)};
+    MemoryReader reader{slice};
+    Scanner scan{reader};
+
     return format(writer, scan, forward<Args>(args)...);
 }
 

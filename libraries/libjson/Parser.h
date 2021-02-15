@@ -116,16 +116,15 @@ inline void whitespace(IO::Scanner &scan)
 inline Value number(IO::Scanner &scan)
 {
 #ifdef __KERNEL__
-    return Value{scan_int(scan, 10)};
-    return IO::NumberScanner::decimal().scan_in(scan);
+    return *IO::NumberScanner::decimal().scan_int(scan);
 #else
-    return IO::NumberScanner::decimal().scan_float(scan);
+    return *IO::NumberScanner::decimal().scan_float(scan);
 #endif
 }
 
 inline String string(IO::Scanner &scan)
 {
-    StringBuilder builder{};
+    IO::MemoryWriter memory{};
 
     scan.skip('"');
 
@@ -133,18 +132,18 @@ inline String string(IO::Scanner &scan)
     {
         if (scan.current() == '\\')
         {
-            builder.append(escape_sequence(scan));
+            memory.write(escape_sequence(scan));
         }
         else
         {
-            builder.append(scan.current());
+            memory.write(scan.current());
             scan.foreward();
         }
     }
 
     scan.skip('"');
 
-    return builder.finalize();
+    return memory.string();
 }
 
 inline Value array(IO::Scanner &scan)

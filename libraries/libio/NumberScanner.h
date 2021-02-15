@@ -21,6 +21,28 @@ struct NumberScanner
 
     static NumberScanner hexadecimal() { return {16}; }
 
+    Optional<uint8_t> scan_digit(Scanner &scan)
+    {
+        if (!scan.current_is(Strings::ALL_XDIGITS))
+        {
+            return {};
+        }
+
+        char c = scan.current();
+
+        for (int i = 0; i < _base; i++)
+        {
+            if ((Strings::LOWERCASE_XDIGITS[i] == c) ||
+                (Strings::UPPERCASE_XDIGITS[i] == c))
+            {
+                scan.foreward();
+                return i;
+            }
+        }
+
+        ASSERT_NOT_REACHED();
+    }
+
     Optional<uint64_t> scan_uint(Scanner &scan)
     {
         if (!scan.current_is(Strings::ALL_XDIGITS))
@@ -30,61 +52,46 @@ struct NumberScanner
 
         uint64_t value = 0;
 
-        for (size_t i = 0; (i < size && str[i]); i++)
+        while (!scan.ended() &&
+               scan.current_is(Strings::ALL_XDIGITS))
         {
             value = value * _base;
-
-            for (int j = 0; j < _base; j++)
-            {
-                if ((Strings::LOWERCASE_XDIGITS[j] == str[i]) ||
-                    (Strings::UPPERCASE_XDIGITS[j] == str[i]))
-                {
-                    value += j;
-                }
-            }
+            value += *scan_digit(scan);
         }
 
-        *result = value;
-        return true;
+        return value;
     }
 
     Optional<int64_t> scan_int(Scanner &scan)
     {
-        if (str == nullptr || size == 0)
+        if (!scan.current_is(Strings::ALL_XDIGITS) &&
+            !scan.current_is("-"))
         {
-            *result = 0;
-            return false;
+            return {};
         }
 
-        bool is_negative = str[0] == '-';
-        if (is_negative)
-        {
-            str++;
-            size--;
-        }
+        bool is_negative = scan.skip('-');
 
-        unsigned int unsigned_value = 0;
-        if (!scan_uint(parser, str, size, &unsigned_value))
+        auto unsigned_value = scan_uint(scan);
+
+        if (!unsigned_value)
         {
-            *result = 0;
-            return false;
+            return {};
         }
 
         if (is_negative)
         {
-            *result = -unsigned_value;
+            return -*unsigned_value;
         }
         else
         {
-            *result = unsigned_value;
+            return *unsigned_value;
         }
-
-        return true;
     }
 
     Optional<double> scan_float(Scanner &scan)
     {
-        int ipart = scan_int(scan);
+        int64_t ipart = scan_int(scan);
 
         double fpart = 0;
 
@@ -92,15 +99,14 @@ struct NumberScanner
         {
             double multiplier = (1.0 / _base);
 
-            while (scan.current_is(Strings::DIGITS))
+            while (scan.current_is(Strings::ALL_XDIGITS))
             {
-                fpart += multiplier * (scan.current() - '0');
+                fpart += multiplier * *scan_digit(scan);
                 multiplier *= (1.0 / _base);
-                scan.foreward();
             }
         }
 
-        int exp = 0;
+        int64_t exp = 0;
 
         if (scan.current_is("eE"))
         {

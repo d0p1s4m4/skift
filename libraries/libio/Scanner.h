@@ -3,6 +3,7 @@
 #include <libio/Reader.h>
 #include <libutils/InlineRingBuffer.h>
 #include <libutils/unicode/Codepoint.h>
+#include <string.h>
 
 namespace IO
 {
