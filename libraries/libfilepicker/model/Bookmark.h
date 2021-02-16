@@ -2,7 +2,7 @@
 
 #include <libgraphic/Icon.h>
 #include <libjson/Json.h>
-#include <libutils/Path.h>
+#include <libsystem/Path.h>
 #include <libutils/RefPtr.h>
 
 namespace filepicker
@@ -13,7 +13,7 @@ struct Bookmark
 private:
     String _name;
     RefPtr<Icon> _icon;
-    Path _path;
+    System::Path _path;
 
 public:
     const String &name() const
@@ -26,7 +26,7 @@ public:
         return _icon;
     }
 
-    const Path &path() const
+    const System::Path &path() const
     {
         return _path;
     }

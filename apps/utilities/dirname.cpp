@@ -1,5 +1,5 @@
+#include <libsystem/Path.h>
 #include <libutils/ArgParse.h>
-#include <libutils/Path.h>
 #include <stdio.h>
 
 constexpr auto PROLOGUE = "Output each NAME with its last non - slash component and trailing slashes removed.";

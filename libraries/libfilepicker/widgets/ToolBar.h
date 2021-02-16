@@ -17,7 +17,7 @@ private:
     RefPtr<Bookmarks> _bookmarks;
 
     Widget *_go_backward;
-    Widget *_go_foreward;
+    Widget *_go_forward;
     Widget *_go_up;
     Widget *_go_home;
 
@@ -47,9 +47,9 @@ public:
             _navigation->go_backward();
         });
 
-        _go_foreward = new Button(this, Button::TEXT, Icon::get("arrow-right"));
+        _go_forward = new Button(this, Button::TEXT, Icon::get("arrow-right"));
 
-        _go_foreward->on(Event::ACTION, [this](auto) {
+        _go_forward->on(Event::ACTION, [this](auto) {
             _navigation->go_forward();
         });
 
@@ -89,7 +89,7 @@ public:
 
         _observer = _navigation->observe([this](auto &) {
             _go_backward->enable_if(_navigation->can_go_backward());
-            _go_foreward->enable_if(_navigation->can_go_forward());
+            _go_forward->enable_if(_navigation->can_go_forward());
             _go_up->enable_if(_navigation->can_go_up());
         });
     }

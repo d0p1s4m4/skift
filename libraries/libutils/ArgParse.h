@@ -347,7 +347,7 @@ public:
                         return PROCESS_FAILURE;
                     }
 
-                    scan.foreward();
+                    scan.forward();
                 }
             }
             else

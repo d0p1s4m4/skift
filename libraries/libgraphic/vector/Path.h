@@ -40,11 +40,13 @@ private:
 public:
     static Path parse(const char *str)
     {
-        StringScanner scan{str, strlen(str)};
+        IO::MemoryReader memory{str};
+        IO::Scanner scan{memory};
+
         return parse(scan);
     }
 
-    static Path parse(Scanner &scan);
+    static Path parse(IO::Scanner &scan);
 
     const SubPath &subpath(size_t index) const
     {
@@ -73,6 +75,7 @@ public:
         }
 
         SubPath subpath{point};
+
         _subpath.push_back(move(subpath));
         _subpath_ended = false;
     }

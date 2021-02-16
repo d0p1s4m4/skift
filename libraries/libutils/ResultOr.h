@@ -1,8 +1,8 @@
 #pragma once
 
 #include <assert.h>
-#include <libsystem/Result.h>
 
+#include <libsystem/Result.h>
 #include <libutils/Move.h>
 #include <libutils/Optional.h>
 

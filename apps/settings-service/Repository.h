@@ -2,7 +2,7 @@
 
 #include <libio/Directory.h>
 #include <libsettings/Path.h>
-#include <libutils/Path.h>
+#include <libsystem/Path.h>
 #include <stdio.h>
 
 #include "settings-service/Domain.h"

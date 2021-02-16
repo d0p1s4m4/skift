@@ -1,10 +1,10 @@
 
 #include <libfile/ZipArchive.h>
+#include <libio/File.h>
 #include <libio/Streams.h>
-#include <libsystem/io/File.h>
+#include <libsystem/Path.h>
 #include <libsystem/io/Filesystem.h>
 #include <libutils/ArgParse.h>
-#include <libutils/Path.h>
 
 int main(int argc, char const *argv[])
 {

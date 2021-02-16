@@ -27,7 +27,7 @@ static int number(Scanner &scan)
     {
         number *= 10;
         number += scan.current() - '0';
-        scan.foreward();
+        scan.forward();
     }
 
     return number;

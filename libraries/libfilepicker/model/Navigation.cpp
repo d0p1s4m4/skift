@@ -16,7 +16,7 @@ void Navigation::go_up()
 {
     if (can_go_up())
     {
-        clear_foreward();
+        clear_forward();
         navigate(_current.dirpath(), BACKWARD);
     }
 }
@@ -30,32 +30,32 @@ void Navigation::go_backward()
 {
     if (can_go_backward())
     {
-        navigate(_backward.pop_back(), FOREWARD);
+        navigate(_backward.pop_back(), FORWARD);
     }
 }
 
 bool Navigation::can_go_forward()
 {
-    return _foreward.any();
+    return _forward.any();
 }
 
 void Navigation::go_forward()
 {
     if (can_go_forward())
     {
-        navigate(_foreward.pop_back(), BACKWARD);
+        navigate(_forward.pop_back(), BACKWARD);
     }
 }
 
 void Navigation::go_home()
 {
-    clear_foreward();
+    clear_forward();
     navigate(Path::parse("/User"), BACKWARD);
 }
 
 void Navigation::go_home_dont_record_history()
 {
-    clear_foreward();
+    clear_forward();
     navigate(Path::parse("/User"), NONE);
 }
 
@@ -71,7 +71,7 @@ void Navigation::navigate(String directory)
 
 void Navigation::navigate(Path path)
 {
-    clear_foreward();
+    clear_forward();
     navigate(path, BACKWARD);
 }
 
@@ -92,9 +92,9 @@ void Navigation::navigate(Path path, Direction record_history)
     {
         _backward.push_back(_current);
     }
-    else if (record_history == FOREWARD)
+    else if (record_history == FORWARD)
     {
-        _foreward.push_back(_current);
+        _forward.push_back(_current);
     }
 
     _current = path;
@@ -104,9 +104,9 @@ void Navigation::navigate(Path path, Direction record_history)
     did_update();
 }
 
-void Navigation::clear_foreward()
+void Navigation::clear_forward()
 {
-    _foreward.clear();
+    _forward.clear();
 }
 
 } // namespace filepicker

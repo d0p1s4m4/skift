@@ -2,6 +2,7 @@
 #include <skift/Environment.h>
 #include <stdio.h>
 
+#include <libsystem/Path.h>
 #include <libsystem/Result.h>
 #include <libsystem/io/File.h>
 #include <libsystem/io/Filesystem.h>
@@ -9,14 +10,12 @@
 #include <libsystem/io/Stream.h>
 #include <libsystem/process/Launchpad.h>
 #include <libsystem/process/Process.h>
-#include <libutils/Path.h>
 
 #include "shell/Shell.h"
 
 bool find_command_path(char *buffer, const char *command)
 {
-    if (command[0] == '/' ||
-        command[0] == '.')
+    if (command[0] == '/' || command[0] == '.')
     {
         snprintf(buffer, PATH_LENGTH, "%s", command);
 

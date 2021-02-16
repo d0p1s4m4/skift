@@ -65,7 +65,7 @@ Result readline_readline(ReadLine *readline, char **line)
 
             readline->should_continue = false;
 
-            readline->scan->foreward();
+            readline->scan->forward();
         }
         else if (readline->scan->current() == U'\b' ||
                  readline->scan->current() == 127 /*DEL*/)
@@ -78,22 +78,22 @@ Result readline_readline(ReadLine *readline, char **line)
                 unicode_string_remove(readline->string, readline->cursor);
             }
 
-            readline->scan->foreward();
+            readline->scan->forward();
         }
         else if (readline->scan->current() == U'\t')
         {
-            readline->scan->foreward();
+            readline->scan->forward();
         }
         else if (readline->scan->current() == U'\e')
         {
-            readline->scan->foreward();
+            readline->scan->forward();
 
             if (readline->scan->current() != '[')
             {
                 continue;
             }
 
-            readline->scan->foreward();
+            readline->scan->forward();
 
             if (readline->scan->current() == 'A')
             {
@@ -134,7 +134,7 @@ Result readline_readline(ReadLine *readline, char **line)
                 {
                     digits *= 10;
                     digits += readline->scan->current() - '0';
-                    readline->scan->foreward();
+                    readline->scan->forward();
                 }
 
                 if (readline->scan->current() == '~')
@@ -157,14 +157,14 @@ Result readline_readline(ReadLine *readline, char **line)
                 }
             }
 
-            readline->scan->foreward();
+            readline->scan->forward();
         }
         else
         {
             readline_recale_history(readline);
 
             readline->decoder->write(readline->scan->current());
-            readline->scan->foreward();
+            readline->scan->forward();
         }
 
         readline_repaint(readline);

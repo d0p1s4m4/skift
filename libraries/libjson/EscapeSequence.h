@@ -19,7 +19,7 @@ inline const char *escape_sequence(IO::Scanner &scan)
     }
 
     char chr = scan.current();
-    scan.foreward();
+    scan.forward();
 
     switch (chr)
     {
@@ -55,7 +55,7 @@ inline const char *escape_sequence(IO::Scanner &scan)
             for (size_t i = 0; i < 4 && scan.current_is(Strings::LOWERCASE_XDIGITS); i++)
             {
                 buffer[i] = scan.current();
-                scan.foreward();
+                scan.forward();
             }
 
             IO::MemoryReader buffer_reader{buffer, 5};

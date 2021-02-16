@@ -1,9 +1,10 @@
 #pragma once
 
-#include <libsystem/process/Process.h>
 #include <libutils/Observable.h>
-#include <libutils/Path.h>
 #include <libutils/Vector.h>
+
+#include <libsystem/Path.h>
+#include <libsystem/process/Process.h>
 
 namespace filepicker
 {
@@ -13,19 +14,19 @@ class Navigation :
     public RefCounted<Navigation>
 {
 private:
-    Vector<Path> _backward{};
-    Path _current{};
-    Vector<Path> _foreward{};
+    Vector<System::Path> _backward{};
+    System::Path _current{};
+    Vector<System::Path> _forward{};
 
 public:
     enum Direction
     {
         NONE,
         BACKWARD,
-        FOREWARD
+        FORWARD
     };
 
-    const Path &current() const { return _current; }
+    const System::Path &current() const { return _current; }
 
     Navigation();
 
@@ -49,11 +50,11 @@ public:
 
     void navigate(String directory);
 
-    void navigate(Path path);
+    void navigate(System::Path path);
 
-    void navigate(Path path, Direction record_history);
+    void navigate(System::Path path, Direction record_history);
 
-    void clear_foreward();
+    void clear_forward();
 };
 
 } // namespace filepicker

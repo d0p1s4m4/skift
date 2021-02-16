@@ -1,7 +1,9 @@
 #pragma once
 
 #include <libio/Seek.h>
+
 #include <libutils/ResultOr.h>
+#include <libutils/String.h>
 #include <libutils/unicode/Codepoint.h>
 
 namespace IO

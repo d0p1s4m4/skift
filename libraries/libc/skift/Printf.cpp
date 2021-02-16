@@ -6,14 +6,27 @@
 
 int __printf_output(printf_info_t *info, const char *buffer)
 {
-    PRINTF_PADDING(buffer, PFALIGN_RIGHT);
+
+    if (info->align == PFALIGN_RIGHT && strlen(buffer) < info->length)
+    {
+        for (size_t i = 0; i < (info->length - strlen(buffer)); i++)
+        {
+            PRINTF_APPEND(info->padding);
+        }
+    }
 
     for (int i = 0; buffer[i]; i++)
     {
         PRINTF_APPEND(buffer[i]);
     }
 
-    PRINTF_PADDING(buffer, PFALIGN_LEFT);
+    if (info->align == PFALIGN_LEFT && strlen(buffer) < info->length)
+    {
+        for (size_t i = 0; i < (info->length - strlen(buffer)); i++)
+        {
+            PRINTF_APPEND(info->padding);
+        }
+    }
 
     return info->written;
 }
@@ -109,7 +122,11 @@ int __printf_formate_string(printf_info_t *info, va_list *va)
     return __printf_output(info, v);
 }
 
-static printf_formatter_t formaters[] = {
+static struct
+{
+    char c;
+    printf_formatter_impl_t impl;
+} formaters[] = {
     /* Binary        */ {'b', __printf_formate_binary},
     /* Octal         */ {'o', __printf_formate_octal},
     /* Decimal       */ {'d', __printf_formate_decimal},

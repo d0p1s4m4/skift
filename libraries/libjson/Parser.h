@@ -1,9 +1,8 @@
 #pragma once
 
-
-#include <libutils/Strings.h>
 #include <libjson/EscapeSequence.h>
 #include <libjson/Value.h>
+#include <libutils/Strings.h>
 
 namespace Json
 {
@@ -39,7 +38,7 @@ inline String string(IO::Scanner &scan)
         else
         {
             memory.write(scan.current());
-            scan.foreward();
+            scan.forward();
         }
     }
 

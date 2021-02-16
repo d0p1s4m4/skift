@@ -1,5 +1,5 @@
 #include <libio/Streams.h>
-#include <libutils/Path.h>
+#include <libsystem/Path.h>
 
 int main(int argc, char **argv)
 {

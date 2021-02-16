@@ -35,7 +35,7 @@ struct NumberScanner
             if ((Strings::LOWERCASE_XDIGITS[i] == c) ||
                 (Strings::UPPERCASE_XDIGITS[i] == c))
             {
-                scan.foreward();
+                scan.forward();
                 return i;
             }
         }
@@ -110,7 +110,7 @@ struct NumberScanner
 
         if (scan.current_is("eE"))
         {
-            scan.foreward();
+            scan.forward();
             exp = scan_int(scan);
         }
 

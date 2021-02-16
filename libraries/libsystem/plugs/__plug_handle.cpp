@@ -2,10 +2,10 @@
 #include <skift/Environment.h>
 
 #include <libio/Directory.h>
+#include <libsystem/Path.h>
 #include <libsystem/core/Plugs.h>
 #include <libsystem/io/Filesystem.h>
 #include <libsystem/process/Process.h>
-#include <libutils/Path.h>
 
 Result __plug_process_get_directory(char *buffer, size_t size)
 {

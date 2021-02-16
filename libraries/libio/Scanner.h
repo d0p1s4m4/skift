@@ -46,7 +46,7 @@ public:
         return _is_end_of_file;
     }
 
-    void foreward()
+    void forward()
     {
         if (_peek.empty())
         {
@@ -79,31 +79,31 @@ public:
         return !ended();
     }
 
-    void foreward(size_t n)
+    void forward(size_t n)
     {
         for (size_t i = 0; i < n; i++)
         {
-            foreward();
+            forward();
         }
     }
 
-    void foreward_codepoint()
+    void forward_codepoint()
     {
         if ((current() & 0xf8) == 0xf0)
         {
-            foreward(4);
+            forward(4);
         }
         else if ((current() & 0xf0) == 0xe0)
         {
-            foreward(3);
+            forward(3);
         }
         else if ((current() & 0xe0) == 0xc0)
         {
-            foreward(2);
+            forward(2);
         }
         else
         {
-            foreward(1);
+            forward(1);
         }
     }
 
@@ -176,7 +176,7 @@ public:
     {
         while (current_is(what) && do_continue())
         {
-            foreward();
+            forward();
         }
     }
 
@@ -184,7 +184,7 @@ public:
     {
         if (current() == chr)
         {
-            foreward();
+            forward();
 
             return true;
         }
@@ -196,7 +196,7 @@ public:
     {
         if (current_is(chr))
         {
-            foreward();
+            forward();
 
             return true;
         }
@@ -210,7 +210,7 @@ public:
         {
             for (size_t i = 0; i < strlen(word); i++)
             {
-                foreward();
+                forward();
             }
 
             return true;

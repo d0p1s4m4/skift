@@ -15,7 +15,7 @@ Path Path::parse(Scanner &scan)
         while (scan.current() != sep && scan.do_continue())
         {
             build.append(scan.current());
-            scan.foreward();
+            scan.forward();
         }
 
         return build.finalize();

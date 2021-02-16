@@ -1,8 +1,8 @@
 #include <libio/Directory.h>
 #include <libio/Streams.h>
+#include <libsystem/Path.h>
 #include <libsystem/cmdline/CMDLine.h>
 #include <libsystem/io/Filesystem.h>
-#include <libutils/Path.h>
 #include <stdio.h>
 
 static bool force = false;

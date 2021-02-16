@@ -29,7 +29,7 @@ static char *string(Scanner &scan)
         else
         {
             buffer_builder_append_chr(builder, scan.current());
-            scan.foreward();
+            scan.forward();
         }
     }
 
@@ -52,13 +52,13 @@ static char *argument(Scanner &scan)
     {
         if (scan.current() == '\\')
         {
-            scan.foreward();
+            scan.forward();
         }
 
         if (scan.do_continue())
         {
             buffer_builder_append_chr(builder, scan.current());
-            scan.foreward();
+            scan.forward();
         }
     }
 

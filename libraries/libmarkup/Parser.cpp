@@ -26,7 +26,7 @@ static String identifier(Scanner &scan)
            scan.do_continue())
     {
         builder.append(scan.current());
-        scan.foreward();
+        scan.forward();
     }
 
     return builder.finalize();
@@ -48,7 +48,7 @@ static String string(Scanner &scan)
         else
         {
             builder.append(scan.current());
-            scan.foreward();
+            scan.forward();
         }
     }
 

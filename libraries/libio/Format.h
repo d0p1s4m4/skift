@@ -74,12 +74,12 @@ struct Formating
         if (scanner.current_is("scbdox"))
         {
             parse_type();
-            scanner.foreward();
+            scanner.forward();
         }
 
         while (!scanner.ended() && scanner.current() != '}')
         {
-            scanner.foreward();
+            scanner.forward();
         }
 
         scanner.skip('}');
@@ -127,7 +127,7 @@ static inline ResultOr<size_t> format(Writer &writer, Scanner &scanner)
         }
 
         written += 1;
-        scanner.foreward();
+        scanner.forward();
     }
 
     return written;
@@ -148,7 +148,7 @@ static inline ResultOr<size_t> format(Writer &writer, Scanner &scanner, First fi
         }
 
         written += 1;
-        scanner.foreward();
+        scanner.forward();
     }
 
     if (scanner.current() == '{')

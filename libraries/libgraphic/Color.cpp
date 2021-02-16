@@ -63,7 +63,7 @@ Color Color::parse(String string)
             buffer[length] = scan.current();
             length++;
 
-            scan.foreward();
+            scan.forward();
         }
 
         buffer[length] = '\0';

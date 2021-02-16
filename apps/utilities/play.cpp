@@ -1,8 +1,8 @@
 #include "kernel/drivers/AC97.h"
+#include <libsystem/Path.h>
 #include <libsystem/io/File.h>
 #include <libsystem/io/Filesystem.h>
 #include <libsystem/io/Stream.h>
-#include <libutils/Path.h>
 int main(int argc, char **argv)
 {
     if (argc == 1)

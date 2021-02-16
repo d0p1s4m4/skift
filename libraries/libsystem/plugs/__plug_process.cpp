@@ -2,8 +2,8 @@
 #include <abi/Syscalls.h>
 
 #include <assert.h>
+#include <libsystem/Path.h>
 #include <libsystem/core/Plugs.h>
-#include <libutils/Path.h>
 
 int __plug_process_this()
 {

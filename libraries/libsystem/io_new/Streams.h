@@ -86,7 +86,7 @@ static inline ResultOr<String> inln()
     {
         writer.write(scan.current());
         out().write(scan.current());
-        scan.foreward();
+        scan.forward();
     }
 
     out().write('\n');

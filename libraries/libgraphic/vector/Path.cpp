@@ -39,7 +39,7 @@ static int arcflags(Scanner &scan)
     {
         flags |= Arc::LARGE;
     }
-    scan.foreward();
+    scan.forward();
 
     whitespace_or_comma(scan);
 
@@ -48,7 +48,7 @@ static int arcflags(Scanner &scan)
         flags |= Arc::SWEEP;
     }
 
-    scan.foreward();
+    scan.forward();
 
     whitespace_or_comma(scan);
 
@@ -245,7 +245,7 @@ Path Path::parse(Scanner &scan)
            scan.current_is(OPERATIONS))
     {
         char op = scan.current();
-        scan.foreward();
+        scan.forward();
 
         do
         {

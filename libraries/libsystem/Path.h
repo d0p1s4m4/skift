@@ -10,7 +10,7 @@
 namespace System
 {
 
-struct Path
+class Path
 {
 private:
     bool _absolute = false;
@@ -27,18 +27,22 @@ public:
 
     static Path parse(const String &string, int flags = 0)
     {
-        return parse(string.cstring(), string.length(), flags);
+        IO::MemoryReader reader{string};
+        IO::Scanner scan{reader};
+
+        return parse(scan, flags);
     }
 
     static Path parse(const char *path, int flags = 0)
     {
-        return parse(path, strlen(path), flags);
+        IO::MemoryReader reader{path};
+        IO::Scanner scan{reader};
+
+        return parse(scan, flags);
     }
 
-    static Path parse(const char *path, size_t size, int flags)
+    static Path parse(IO::Scanner &scan, int flags)
     {
-        StringScanner scan{path, size};
-
         bool absolute = false;
 
         if (scan.skip(PATH_SEPARATOR))
@@ -47,16 +51,15 @@ public:
         }
 
         auto parse_element = [](auto &scan) {
-            StringBuilder builder{};
+            IO::MemoryWriter memory{};
 
-            while (!scan.skip(PATH_SEPARATOR) &&
-                   scan.do_continue())
+            while (!scan.skip(PATH_SEPARATOR) && scan.do_continue())
             {
-                builder.append(scan.current());
-                scan.foreward();
+                memory.write(scan.current());
+                scan.forward();
             }
 
-            return builder.finalize();
+            return memory.string();
         };
 
         auto parse_shorthand = [](auto &scan) {
@@ -260,53 +263,54 @@ public:
 
     String basename_without_extension() const
     {
-        StringBuilder builder{basename().length()};
+        IO::MemoryWriter memory{basename().length()};
 
-        StringScanner scan{basename().cstring(), basename().length()};
+        IO::MemoryReader memory_reader{basename()};
+        IO::Scanner scan{memory_reader};
 
         // It's not a file extention it's an hidden file.
         if (scan.current_is("."))
         {
-            builder.append(scan.current());
-            scan.foreward();
+            memory.write(scan.current());
+            scan.forward();
         }
 
         while (!scan.current_is(".") && scan.do_continue())
         {
-            builder.append(scan.current());
-            scan.foreward();
+            memory.write(scan.current());
+            scan.forward();
         }
 
-        return builder.finalize();
+        return memory.string();
     }
 
     String dirname() const
     {
-        StringBuilder builder{};
+        IO::MemoryWriter memory;
 
         if (_absolute)
         {
-            builder.append(PATH_SEPARATOR);
+            memory.write(PATH_SEPARATOR);
         }
         else if (_elements.count() <= 1)
         {
-            builder.append(".");
+            memory.write(".");
         }
 
         if (_elements.count() >= 2)
         {
             for (size_t i = 0; i < _elements.count() - 1; i++)
             {
-                builder.append(_elements[i]);
+                memory.write(_elements[i]);
 
                 if (i != _elements.count() - 2)
                 {
-                    builder.append(PATH_SEPARATOR);
+                    memory.write(PATH_SEPARATOR);
                 }
             }
         }
 
-        return builder.finalize();
+        return memory.string();
     }
 
     Path dirpath() const
@@ -335,19 +339,18 @@ public:
         // It's not a file extention it's an hidden file.
         if (scan.current_is("."))
         {
-            scan.foreward();
+            scan.forward();
         }
 
-        while (!scan.current_is(".") &&
-               scan.do_continue())
+        while (!scan.current_is(".") && scan.do_continue())
         {
-            scan.foreward();
+            scan.forward();
         }
 
         while (scan.do_continue())
         {
             builder.append(scan.current());
-            scan.foreward();
+            scan.forward();
         }
 
         return builder.finalize();
