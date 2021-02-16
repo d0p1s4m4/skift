@@ -8,9 +8,10 @@ namespace IO
 class BitWriter
 {
 private:
-    uint_fast32_t _bit_buffer;
-    uint8_t _bit_count;
     Writer &_writer;
+
+    uint_fast32_t _bit_buffer = 0;
+    uint8_t _bit_count = 0;
 
 public:
     BitWriter(Writer &writer) : _writer(writer)

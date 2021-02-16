@@ -1,7 +1,10 @@
-#include <libsystem/compression/DeflateReader.h>
+#include <libcompression/DeflateReader.h>
 #include <libsystem/io/MemoryReader.h>
 #include <libsystem/io/MemoryWriter.h>
 #include <libsystem/io/ScopedReader.h>
+
+namespace Compression
+{
 
 DeflateReader::DeflateReader(Reader &reader) : _reader(reader)
 {
@@ -29,3 +32,5 @@ size_t DeflateReader::read(void *buffer, size_t size)
 
     return remaining;
 }
+
+} // namespace Compression

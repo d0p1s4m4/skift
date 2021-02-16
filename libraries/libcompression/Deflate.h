@@ -1,12 +1,19 @@
 #pragma once
+
+#include <libutils/Callback.h>
+
 #include <libsystem/Common.h>
 #include <libsystem/Result.h>
-#include <libsystem/compression/Common.h>
 #include <libsystem/io/BitWriter.h>
-#include <libutils/Callback.h>
+
+#include <libcompression/Common.h>
 
 class Reader;
 class Writer;
+
+namespace Compression
+{
+
 class Deflate
 {
 public:
@@ -25,3 +32,5 @@ private:
     unsigned int _compression_level;
     unsigned int _min_size_to_compress;
 };
+
+} // namespace Compression

@@ -1,10 +1,19 @@
 #pragma once
-#include <libsystem/compression/Deflate.h>
+
+#include <libcompression/Deflate.h>
 #include <libsystem/io/MemoryWriter.h>
 #include <libsystem/io/Writer.h>
 
+namespace Compression
+{
+
 class DeflateWriter : public Writer
 {
+private:
+    Deflate _deflate;
+    MemoryWriter _mem_buffer;
+    Writer &_writer;
+
 public:
     DeflateWriter(Writer &writer, int level = 5);
     ~DeflateWriter();
@@ -14,9 +23,6 @@ public:
 
     virtual void flush() override;
     virtual size_t write(const void *buffer, size_t size) override;
-
-private:
-    Deflate _deflate;
-    MemoryWriter _mem_buffer;
-    Writer &_writer;
 };
+
+} // namespace Compression

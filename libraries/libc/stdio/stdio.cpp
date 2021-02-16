@@ -124,9 +124,11 @@ size_t fread(void *ptr, size_t size, size_t count, FILE *file)
     for (size_t i = 0; i < count; i++)
     {
         size_t read = 0;
+
         result = hj_handle_read(file->handle, dst_ptr, size, &read);
         total += read;
         dst_ptr += read;
+
         if (result != Result::SUCCESS)
         {
             // TODO: set errno
@@ -329,57 +331,75 @@ char *strerror(int e)
     case EAGAIN:
         s = "Operation would block (EAGAIN)";
         break;
+
     case EACCES:
         s = "Access denied (EACCESS)";
         break;
+
     case EBADF:
         s = "Bad file descriptor (EBADF)";
         break;
+
     case EEXIST:
         s = "File exists already (EEXIST)";
         break;
+
     case EFAULT:
         s = "Access violation (EFAULT)";
         break;
+
     case EINTR:
         s = "Operation interrupted (EINTR)";
         break;
+
     case EINVAL:
         s = "Invalid argument (EINVAL)";
         break;
+
     case EIO:
         s = "I/O error (EIO)";
         break;
+
     case EISDIR:
         s = "Resource is directory (EISDIR)";
         break;
+
     case ENOENT:
         s = "No such file or directory (ENOENT)";
         break;
+
     case ENOMEM:
         s = "Out of memory (ENOMEM)";
         break;
+
     case ENOTDIR:
         s = "Expected directory instead of file (ENOTDIR)";
         break;
+
     case ENOSYS:
         s = "Operation not implemented (ENOSYS)";
         break;
+
     case EPERM:
         s = "Operation not permitted (EPERM)";
         break;
+
     case EPIPE:
         s = "Broken pipe (EPIPE)";
         break;
+
     case ESPIPE:
         s = "Seek not possible (ESPIPE)";
         break;
+
     case ENXIO:
         s = "No such device or address (ENXIO)";
         break;
+
     case ENOEXEC:
         s = "Exec format error (ENOEXEC)";
         break;
+
     default:
         s = "Unknown error code (?)";
     }

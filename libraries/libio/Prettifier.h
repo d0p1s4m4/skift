@@ -5,16 +5,19 @@
 namespace IO
 {
 
-class Prettifier : public Writer
+class Prettifier :
+    public Writer
 {
 private:
-    int _depth = 0;
+    Writer &_writer;
     int _flags;
 
+    int _depth = 0;
     Optional<char> _buffer;
-    Writer &_writer;
 
 public:
+    using Writer::write;
+
     static constexpr auto NONE = 0;
     static constexpr auto COLORS = 1 << 0;
     static constexpr auto INDENTS = 1 << 1;
@@ -27,14 +30,14 @@ public:
 
     void ident()
     {
-        if (!(_flags & INDENTS))
-            return;
-
-        write('\n');
-
-        for (int i = 0; i < _depth; i++)
+        if (_flags & INDENTS)
         {
-            write("    ");
+            write('\n');
+
+            for (int i = 0; i < _depth; i++)
+            {
+                write("    ");
+            }
         }
     }
 
@@ -74,7 +77,6 @@ public:
         }
     }
 
-    using Writer::write;
     virtual ResultOr<size_t> write(const void *buffer, size_t size) override
     {
         if (_buffer)

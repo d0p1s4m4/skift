@@ -1,8 +1,11 @@
-#include <libsystem/compression/DeflateWriter.h>
+#include <libcompression/DeflateWriter.h>
 #include <libsystem/io/MemoryReader.h>
 #include <libsystem/io/MemoryWriter.h>
 
 #define MAX_BLOCK_SIZE 0xFFFF
+
+namespace Compression
+{
 
 DeflateWriter::DeflateWriter(Writer &writer, int level) : _deflate(level), _writer(writer)
 {
@@ -41,3 +44,5 @@ size_t DeflateWriter::write(const void *buffer, size_t size)
 
     return written;
 }
+
+} // namespace Compression

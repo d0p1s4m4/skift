@@ -1,10 +1,22 @@
-
-// printf.c : printf and snprintf internals
 #include <ctype.h>
+#include <string.h>
 
 #include <skift/NumberFormatter.h>
 #include <skift/Printf.h>
-#include <string.h>
+
+int __printf_output(printf_info_t *info, const char *buffer)
+{
+    PRINTF_PADDING(buffer, PFALIGN_RIGHT);
+
+    for (int i = 0; buffer[i]; i++)
+    {
+        PRINTF_APPEND(buffer[i]);
+    }
+
+    PRINTF_PADDING(buffer, PFALIGN_LEFT);
+
+    return info->written;
+}
 
 int __printf_formate_binary(printf_info_t *info, va_list *va)
 {
@@ -17,16 +29,7 @@ int __printf_formate_binary(printf_info_t *info, va_list *va)
 
     format_uint(format, v, buffer, 65);
 
-    PRINTF_PADDING(buffer, PFALIGN_RIGHT);
-
-    for (int i = 0; buffer[i]; i++)
-    {
-        PRINTF_APPEND(buffer[i]);
-    }
-
-    PRINTF_PADDING(buffer, PFALIGN_LEFT);
-
-    return info->written;
+    return __printf_output(info, buffer);
 }
 
 int __printf_formate_octal(printf_info_t *info, va_list *va)
@@ -40,16 +43,7 @@ int __printf_formate_octal(printf_info_t *info, va_list *va)
 
     format_uint(format, v, buffer, 65);
 
-    PRINTF_PADDING(buffer, PFALIGN_RIGHT);
-
-    for (int i = 0; buffer[i]; i++)
-    {
-        PRINTF_APPEND(buffer[i]);
-    }
-
-    PRINTF_PADDING(buffer, PFALIGN_LEFT);
-
-    return info->written;
+    return __printf_output(info, buffer);
 }
 
 int __printf_formate_decimal(printf_info_t *info, va_list *va)
@@ -63,16 +57,7 @@ int __printf_formate_decimal(printf_info_t *info, va_list *va)
 
     format_int(format, v, buffer, 65);
 
-    PRINTF_PADDING(buffer, PFALIGN_RIGHT);
-
-    for (int i = 0; buffer[i]; i++)
-    {
-        PRINTF_APPEND(buffer[i]);
-    }
-
-    PRINTF_PADDING(buffer, PFALIGN_LEFT);
-
-    return info->written;
+    return __printf_output(info, buffer);
 }
 
 int __printf_formate_decimal_unsigned(printf_info_t *info, va_list *va)
@@ -86,16 +71,7 @@ int __printf_formate_decimal_unsigned(printf_info_t *info, va_list *va)
 
     format_uint(format, v, buffer, 65);
 
-    PRINTF_PADDING(buffer, PFALIGN_RIGHT);
-
-    for (int i = 0; buffer[i]; i++)
-    {
-        PRINTF_APPEND(buffer[i]);
-    }
-
-    PRINTF_PADDING(buffer, PFALIGN_LEFT);
-
-    return info->written;
+    return __printf_output(info, buffer);
 }
 
 int __printf_formate_hexadecimal(printf_info_t *info, va_list *va)
@@ -109,16 +85,7 @@ int __printf_formate_hexadecimal(printf_info_t *info, va_list *va)
 
     format_uint(format, v, buffer, 65);
 
-    PRINTF_PADDING(buffer, PFALIGN_RIGHT);
-
-    for (int i = 0; buffer[i]; i++)
-    {
-        PRINTF_APPEND(buffer[i]);
-    }
-
-    PRINTF_PADDING(buffer, PFALIGN_LEFT);
-
-    return info->written;
+    return __printf_output(info, buffer);
 }
 
 int __printf_formate_char(printf_info_t *info, va_list *va)
@@ -127,16 +94,7 @@ int __printf_formate_char(printf_info_t *info, va_list *va)
 
     char buffer[2] = {v, 0};
 
-    PRINTF_PADDING(buffer, PFALIGN_RIGHT);
-
-    for (int i = 0; buffer[i]; i++)
-    {
-        PRINTF_APPEND(buffer[i]);
-    }
-
-    PRINTF_PADDING(buffer, PFALIGN_LEFT);
-
-    return info->written;
+    return __printf_output(info, buffer);
 }
 
 int __printf_formate_string(printf_info_t *info, va_list *va)
@@ -148,16 +106,7 @@ int __printf_formate_string(printf_info_t *info, va_list *va)
         v = "(null)";
     }
 
-    PRINTF_PADDING(v, PFALIGN_RIGHT);
-
-    for (int i = 0; v[i]; i++)
-    {
-        PRINTF_APPEND(v[i]);
-    }
-
-    PRINTF_PADDING(v, PFALIGN_LEFT);
-
-    return info->written;
+    return __printf_output(info, v);
 }
 
 static printf_formatter_t formaters[] = {

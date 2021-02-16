@@ -14,10 +14,24 @@ class MemoryReader final :
 {
 private:
     Slice _memory;
-    size_t _position = 0;
+    size_t _position;
 
 public:
-    MemoryReader(Slice memory) : _memory(memory)
+    MemoryReader(const char *cstring)
+        : _memory{cstring},
+          _position{0}
+    {
+    }
+
+    MemoryReader(const void *ptr, size_t size)
+        : _memory{ptr, size},
+          _position{0}
+    {
+    }
+
+    MemoryReader(Slice memory)
+        : _memory{memory},
+          _position{0}
     {
     }
 

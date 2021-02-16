@@ -1,10 +1,15 @@
 #include <assert.h>
+
 #include <libio/MemoryWriter.h>
 #include <libio/Reader.h>
 #include <libio/Writer.h>
-#include <libsystem/compression/Common.h>
-#include <libsystem/compression/Huffman.h>
-#include <libsystem/compression/Inflate.h>
+
+#include <libcompression/Common.h>
+#include <libcompression/Huffman.h>
+#include <libcompression/Inflate.h>
+
+namespace Compression
+{
 
 static constexpr uint8_t BASE_LENGTH_EXTRA_BITS[] = {
     0, 0, 0, 0, 0, 0, 0, 0, //257 - 264
@@ -326,3 +331,5 @@ Result Inflate::perform(Reader &compressed, Writer &uncompressed)
 
     return Result::SUCCESS;
 }
+
+} // namespace Compression

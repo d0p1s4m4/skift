@@ -2,10 +2,13 @@
 
 #include <abi/Filesystem.h>
 
-#include <libutils/Scanner.h>
+#include <libio/MemoryWriter.h>
+#include <libio/Scanner.h>
 #include <libutils/String.h>
-#include <libutils/StringBuilder.h>
 #include <libutils/Vector.h>
+
+namespace System
+{
 
 struct Path
 {
@@ -367,23 +370,25 @@ public:
 
     String string() const
     {
-        StringBuilder builder{};
+        IO::MemoryWriter memory{};
 
         if (_absolute)
         {
-            builder.append(PATH_SEPARATOR);
+            memory.write(PATH_SEPARATOR);
         }
 
         for (size_t i = 0; i < _elements.count(); i++)
         {
-            builder.append(_elements[i]);
+            memory.write(_elements[i]);
 
             if (i != _elements.count() - 1)
             {
-                builder.append(PATH_SEPARATOR);
+                memory.write(PATH_SEPARATOR);
             }
         }
 
-        return builder.finalize();
+        return memory.string();
     }
 };
+
+} // namespace System

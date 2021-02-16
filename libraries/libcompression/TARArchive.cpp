@@ -1,9 +1,11 @@
-
-/* tar.c: read in memory tar archive                                          */
-
-#include <libfile/TARArchive.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <libfile/TARArchive.h>
+#include <libsystem/io/FileReader.h>
+
+namespace Compression
+{
 
 struct __packed TARRawBlock
 {
@@ -111,9 +113,6 @@ bool tar_read(void *tarfile, TARBlock *block, size_t index)
     return true;
 }
 
-#include <libfile/TARArchive.h>
-#include <libsystem/io/FileReader.h>
-
 TARArchive::TARArchive(Path path, bool read) : Archive(path)
 {
     if (read)
@@ -175,3 +174,5 @@ void TARArchive::read_archive()
         file_reader.seek(__align_up(block.file_size(), 512), HJ_WHENCE_CURRENT);
     }
 }
+
+} // namespace Compression

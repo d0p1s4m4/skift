@@ -1,16 +1,23 @@
 #include <assert.h>
-#include <libfile/ZipArchive.h>
-#include <libsystem/Logger.h>
-#include <libsystem/compression/Deflate.h>
-#include <libsystem/compression/Inflate.h>
-#include <libsystem/io/BinaryReader.h>
-#include <libsystem/io/FileReader.h>
-#include <libsystem/io/FileWriter.h>
-#include <libsystem/io/MemoryReader.h>
-#include <libsystem/io/MemoryWriter.h>
-#include <libsystem/io/ScopedReader.h>
-#include <libutils/Endian.h>
 #include <stdio.h>
+
+#include <libutils/Endian.h>
+
+#include <libsystem/Logger.h>
+
+#include <libio/BinaryReader.h>
+#include <libio/FileReader.h>
+#include <libio/FileWriter.h>
+#include <libio/MemoryReader.h>
+#include <libio/MemoryWriter.h>
+#include <libio/ScopedReader.h>
+
+#include <libcompression/Deflate.h>
+#include <libcompression/Inflate.h>
+#include <libcompression/ZipArchive.h>
+
+namespace Compression
+{
 
 // Central header
 #define ZIP_END_OF_CENTRAL_DIR_HEADER_SIG 0x06054b50
@@ -369,3 +376,5 @@ Result ZipArchive::insert(const char *entry_name, const char *src_path)
 
     return Result::SUCCESS;
 }
+
+} // namespace Compression

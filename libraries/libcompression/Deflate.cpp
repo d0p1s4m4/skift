@@ -1,9 +1,11 @@
 #include <assert.h>
-#include <libsystem/compression/Common.h>
-#include <libsystem/compression/Deflate.h>
-#include <libsystem/compression/Huffman.h>
-#include <libsystem/io/Reader.h>
-#include <libsystem/io/Writer.h>
+
+#include <libcompression/Common.h>
+#include <libcompression/Deflate.h>
+#include <libcompression/Huffman.h>
+
+namespace Compression
+{
 
 Deflate::Deflate(unsigned int compression_level) : _compression_level(compression_level)
 {
@@ -67,9 +69,11 @@ Result Deflate::perform(Reader &uncompressed, Writer &compressed)
     // Depends on the compression level
     if (uncompressed.length() < _min_size_to_compress)
         [[unlikely]]
-        {
-            return compress_none(uncompressed, compressed);
-        }
+    {
+        return compress_none(uncompressed, compressed);
+    }
 
     return _compression_method(uncompressed, compressed);
 }
+
+} // namespace Compression

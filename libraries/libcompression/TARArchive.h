@@ -2,6 +2,9 @@
 
 #include <libfile/Archive.h>
 
+namespace Compression
+{
+
 struct TARBlock
 {
     char name[100];
@@ -24,3 +27,5 @@ public:
     Result extract(unsigned int entry_index, const char *dest_path) override;
     Result insert(const char *entry_name, const char *src_path) override;
 };
+
+} // namespace Compression

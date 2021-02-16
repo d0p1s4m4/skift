@@ -9,22 +9,19 @@ namespace IO
 class BitReader
 {
 private:
-    const uint8_t *_data;
-    const size_t _size;
-    size_t _index = 0;
+    Reader &_reader;
+
+    uint_fast32_t _bit_buffer = 0;
+    uint8_t _bit_count = 0;
+
+    void fill()
+    {
+    }
 
 public:
-    inline BitReader(const Vector<uint8_t> &data) : _data(data.raw_storage()), _size(data.count())
+    inline BitReader(Reader &reader)
+        : _reader{reader}
     {
-    }
-
-    inline BitReader(uint8_t *data, size_t size) : _data(data), _size(size)
-    {
-    }
-
-    inline BitReader(Reader &reader) : _data(new uint8_t[reader.length()]), _size(reader.length())
-    {
-        reader.read((uint8_t *)_data, reader.length());
     }
 
     inline void skip_bits(size_t num_bits)
@@ -46,13 +43,15 @@ public:
 
     inline unsigned int grab_bits(unsigned int num_bits)
     {
-        unsigned int ret_val = 0;
+        unsigned int result = 0;
+
         for (unsigned int i = 0; i != num_bits; i++)
         {
-            ret_val |= (unsigned int)peek_bit() << i;
+            result |= (unsigned int)peek_bit() << i;
             _index++;
         }
-        return ret_val;
+
+        return result;
     }
 
     inline unsigned int peek_bits(size_t num_bits)

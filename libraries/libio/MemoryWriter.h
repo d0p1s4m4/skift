@@ -20,6 +20,9 @@ private:
     uint8_t *_buffer = nullptr;
 
 public:
+    using Writer::flush;
+    using Writer::write;
+
     MemoryWriter() : MemoryWriter(16)
     {
     }
@@ -34,7 +37,7 @@ public:
         _used = 0;
     }
 
-    ~MemoryWriter()
+    ~MemoryWriter() override
     {
         if (_buffer)
         {

@@ -1,13 +1,14 @@
 #pragma once
 
 #include <libutils/Rect.h>
-#include <libutils/Scanner.h>
 #include <libutils/Vector.h>
+
+#include <libio/Scanner.h>
 
 #include <libgraphic/vector/Arc.h>
 #include <libgraphic/vector/SubPath.h>
 
-namespace graphic
+namespace Graphic
 {
 
 class Path
@@ -205,4 +206,4 @@ public:
     }
 };
 
-} // namespace graphic
+} // namespace Graphic

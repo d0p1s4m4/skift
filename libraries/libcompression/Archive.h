@@ -2,10 +2,18 @@
 
 #include <libsystem/Common.h>
 #include <libsystem/Result.h>
-#include <libsystem/io/File.h>
+#include <libsystem/io_new/File.h>
+
+namespace Compression
+{
 
 class Archive : public RefCounted<Archive>
 {
+protected:
+    Vector<Entry> _entries;
+    Path _path;
+    bool _valid = true;
+
 public:
     struct Entry
     {
@@ -27,8 +35,8 @@ public:
         return _entries;
     }
 
-    virtual Result extract(unsigned int entry_index, const char *dest_path) = 0;
-    virtual Result insert(const char *entry_name, const char *src_dir) = 0;
+    virtual Result extract(unsigned int entry_index, Writer &writer) = 0;
+    virtual Result insert(Reader &reader, const char *src_dir) = 0;
 
     inline const Path &get_path()
     {
@@ -39,9 +47,6 @@ public:
     {
         return _valid;
     }
-
-protected:
-    Vector<Entry> _entries;
-    Path _path;
-    bool _valid = true;
 };
+
+} // namespace Compression

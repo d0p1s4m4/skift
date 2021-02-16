@@ -174,8 +174,7 @@ public:
 
     void eat(const char *what)
     {
-        while (current_is(what) &&
-               do_continue())
+        while (current_is(what) && do_continue())
         {
             foreward();
         }
@@ -220,9 +219,9 @@ public:
         return false;
     }
 
-    void skip_utf8bom(Scanner &scan)
+    void skip_utf8bom()
     {
-        scan.skip_word("\xEF\xBB\xBF");
+        skip_word("\xEF\xBB\xBF");
     }
 };
 

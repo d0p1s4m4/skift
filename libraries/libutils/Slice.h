@@ -10,7 +10,7 @@ class Slice
 {
 private:
     SliceStorage *_storage = nullptr;
-    
+
     const void *_start = nullptr;
     size_t _size = 0;
 
@@ -46,6 +46,12 @@ public:
     {
         _start = _storage->start();
         _size = _storage->size();
+    }
+
+    Slice(const char *start)
+    {
+        _start = start;
+        _size = strlen(start);
     }
 
     Slice(const void *start, size_t size)
