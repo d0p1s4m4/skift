@@ -518,12 +518,12 @@ Result hj_handle_call(int handle, IOCall request, void *args)
     return task_fshandle_call(scheduler_running(), handle, request, args);
 }
 
-Result hj_handle_seek(int handle, int offset, Whence whence)
+Result hj_handle_seek(int handle, int offset, HjWhence whence)
 {
     return task_fshandle_seek(scheduler_running(), handle, offset, whence);
 }
 
-Result hj_handle_tell(int handle, Whence whence, int *offset)
+Result hj_handle_tell(int handle, HjWhence whence, int *offset)
 {
     if (!syscall_validate_ptr((uintptr_t)offset, sizeof(int)))
     {

@@ -89,13 +89,13 @@ public:
         return _result;
     }
 
-    Result seek(int offset, Whence whence)
+    Result seek(int offset, HjWhence whence)
     {
         _result = hj_handle_seek(_handle, offset, whence);
         return _result;
     }
 
-    ResultOr<int> tell(Whence whence)
+    ResultOr<int> tell(HjWhence whence)
     {
         int offset = 0;
         _result = hj_handle_tell(_handle, whence, &offset);

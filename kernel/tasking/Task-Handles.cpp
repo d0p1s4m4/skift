@@ -285,7 +285,7 @@ ResultOr<size_t> task_fshandle_write(Task *task, int handle_index, const void *b
     return result_or_written;
 }
 
-Result task_fshandle_seek(Task *task, int handle_index, int offset, Whence whence)
+Result task_fshandle_seek(Task *task, int handle_index, int offset, HjWhence whence)
 {
     auto handle = task_fshandle_acquire(task, handle_index);
 
@@ -301,7 +301,7 @@ Result task_fshandle_seek(Task *task, int handle_index, int offset, Whence whenc
     return result;
 }
 
-ResultOr<int> task_fshandle_tell(Task *task, int handle_index, Whence whence)
+ResultOr<int> task_fshandle_tell(Task *task, int handle_index, HjWhence whence)
 {
     auto handle = task_fshandle_acquire(task, handle_index);
 

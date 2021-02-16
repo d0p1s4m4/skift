@@ -15,7 +15,7 @@ public:
     inline T peek()
     {
         T result = get<T>();
-        _reader.seek(-sizeof(T), WHENCE_HERE);
+        _reader.seek(-sizeof(T), HJ_WHENCE_CURRENT);
         return result;
     }
 
@@ -36,7 +36,7 @@ public:
 
     inline void skip(size_t num_bytes)
     {
-        _reader.seek(num_bytes, WHENCE_HERE);
+        _reader.seek(num_bytes, HJ_WHENCE_CURRENT);
     }
 
     inline bool good()
@@ -47,7 +47,7 @@ public:
     // Inherited from SeekableReader
     virtual size_t length() override;
     virtual size_t position() override;
-    virtual size_t seek(size_t pos, Whence whence) override;
+    virtual size_t seek(SeekFrom from) override;
     virtual size_t read(void *buffer, size_t size) override;
 
 private:

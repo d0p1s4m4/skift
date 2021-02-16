@@ -146,13 +146,13 @@ Result __plug_handle_call(Handle *handle, IOCall request, void *args)
     return handle->result;
 }
 
-int __plug_handle_seek(Handle *handle, int offset, Whence whence)
+int __plug_handle_seek(Handle *handle, int offset, HjWhence whence)
 {
     handle->result = hj_handle_seek(handle->id, offset, whence);
     return 0;
 }
 
-int __plug_handle_tell(Handle *handle, Whence whence)
+int __plug_handle_tell(Handle *handle, HjWhence whence)
 {
     int offset = 0;
 

@@ -36,7 +36,7 @@ ResultOr<size_t> File::write(const void *buffer, size_t size)
     return _handle.write(buffer, size);
 }
 
-ResultOr<size_t> File::seek(size_t pos, Whence whence)
+ResultOr<size_t> File::seek(SeekFrom from)
 {
     // FIXME: hj_handle_seek should return the current position.
     _handle.seek(pos, whence);
@@ -46,7 +46,7 @@ ResultOr<size_t> File::seek(size_t pos, Whence whence)
 ResultOr<size_t> File::tell()
 {
     // FIXME: sketchy cast
-    return (size_t)_handle.tell(WHENCE_START).value();
+    return (size_t)_handle.tell(HJ_WHENCE_START).value();
 }
 
 ResultOr<size_t> File::length()

@@ -226,7 +226,7 @@ Result __plug_handle_call(Handle *handle, IOCall request, void *args)
     return handle->result;
 }
 
-int __plug_handle_seek(Handle *handle, int offset, Whence whence)
+int __plug_handle_seek(Handle *handle, int offset, HjWhence whence)
 {
     assert(handle->id != INTERNAL_LOG_STREAM_HANDLE);
 
@@ -235,7 +235,7 @@ int __plug_handle_seek(Handle *handle, int offset, Whence whence)
     return 0;
 }
 
-int __plug_handle_tell(Handle *handle, Whence whence)
+int __plug_handle_tell(Handle *handle, HjWhence whence)
 {
     assert(handle->id != INTERNAL_LOG_STREAM_HANDLE);
 

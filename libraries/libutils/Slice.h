@@ -10,6 +10,7 @@ class Slice
 {
 private:
     SliceStorage *_storage = nullptr;
+    
     const void *_start = nullptr;
     size_t _size = 0;
 

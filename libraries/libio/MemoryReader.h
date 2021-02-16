@@ -31,25 +31,22 @@ public:
         return remaining;
     }
 
-    ResultOr<size_t> seek(size_t position, Whence whence) override
+    ResultOr<size_t> seek(SeekFrom from) override
     {
-        switch (whence)
+        switch (from.whence)
         {
-        case WHENCE_START:
-            _position = position;
-            break;
-        case WHENCE_HERE:
-            _position += position;
-            break;
-        case WHENCE_END:
-            _position = _memory.size() + position;
-            break;
+        case Whence::START:
+            return _position = from.position;
+
+        case Whence::CURRENT:
+            return _position += from.position;
+
+        case Whence::END:
+            return _position = _memory.size() + from.position;
+
         default:
             ASSERT_NOT_REACHED();
-            break;
         }
-
-        return _position;
     }
 
     ResultOr<size_t> tell() override

@@ -42,9 +42,9 @@ public:
 
     ResultOr<size_t> write(const void *buffer, size_t size);
 
-    Result seek(int offset, Whence whence);
+    Result seek(int offset, HjWhence whence);
 
-    ResultOr<int> tell(Whence whence);
+    ResultOr<int> tell(HjWhence whence);
 
     Result call(IOCall request, void *args);
 

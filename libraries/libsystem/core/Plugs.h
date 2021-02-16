@@ -78,9 +78,9 @@ size_t __plug_handle_write(Handle *handle, const void *buffer, size_t size);
 
 Result __plug_handle_call(Handle *handle, IOCall request, void *args);
 
-int __plug_handle_seek(Handle *handle, int offset, Whence whence);
+int __plug_handle_seek(Handle *handle, int offset, HjWhence whence);
 
-int __plug_handle_tell(Handle *handle, Whence whence);
+int __plug_handle_tell(Handle *handle, HjWhence whence);
 
 int __plug_handle_stat(Handle *handle, FileState *stat);
 

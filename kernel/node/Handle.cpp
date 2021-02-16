@@ -2,8 +2,8 @@
 #include <assert.h>
 #include <libsystem/Logger.h>
 #include <libsystem/Result.h>
-#include <string.h>
 #include <libsystem/math/MinMax.h>
+#include <string.h>
 
 #include "kernel/node/Connection.h"
 #include "kernel/node/Handle.h"
@@ -161,7 +161,7 @@ ResultOr<size_t> FsHandle::write(const void *buffer, size_t size)
     return written;
 }
 
-Result FsHandle::seek(int offset, Whence whence)
+Result FsHandle::seek(int offset, HjWhence whence)
 {
     _node->acquire(scheduler_running_id());
     size_t size = _node->size();
@@ -169,15 +169,15 @@ Result FsHandle::seek(int offset, Whence whence)
 
     switch (whence)
     {
-    case WHENCE_START:
+    case HJ_WHENCE_START:
         _offset = MAX(0, offset);
         break;
 
-    case WHENCE_HERE:
+    case HJ_WHENCE_CURRENT:
         _offset = _offset + offset;
         break;
 
-    case WHENCE_END:
+    case HJ_WHENCE_END:
         if (offset < 0)
         {
             if ((size_t)-offset <= size)
@@ -203,18 +203,18 @@ Result FsHandle::seek(int offset, Whence whence)
     return SUCCESS;
 }
 
-ResultOr<int> FsHandle::tell(Whence whence)
+ResultOr<int> FsHandle::tell(HjWhence whence)
 {
     _node->acquire(scheduler_running_id());
     size_t size = _node->size();
     _node->release(scheduler_running_id());
 
-    if (whence == WHENCE_START ||
-        whence == WHENCE_HERE)
+    if (whence == HJ_WHENCE_START ||
+        whence == HJ_WHENCE_CURRENT)
     {
         return _offset;
     }
-    else if (whence == WHENCE_END)
+    else if (whence == HJ_WHENCE_END)
     {
         return _offset - size;
     }
