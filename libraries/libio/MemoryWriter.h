@@ -57,7 +57,7 @@ public:
         _used = 0;
         _size = 0;
 
-        return make<StringStorage>(AdoptTag::ADOPT, (char *)result, size - 1);
+        return make<StringStorage>(ADOPT, (char *)result, size - 1);
     }
 
     RefPtr<SliceStorage> slice()
@@ -69,7 +69,7 @@ public:
         _used = 0;
         _size = 0;
 
-        return make<SliceStorage>(SliceStorage::ADOPT, (void *)result, size);
+        return make<SliceStorage>(ADOPT, (void *)result, size);
     }
 
     ResultOr<size_t> write(uint8_t v) override

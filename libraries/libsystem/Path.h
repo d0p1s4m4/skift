@@ -27,7 +27,7 @@ public:
 
     static Path parse(const String &string, int flags = 0)
     {
-        IO::MemoryReader reader{string};
+        IO::MemoryReader reader{string.slice()};
         IO::Scanner scan{reader};
 
         return parse(scan, flags);
@@ -88,7 +88,7 @@ public:
             }
             else
             {
-                auto el = parse_element(scan);
+                String el = parse_element(scan);
 
                 if (el.length() > 0)
                 {
@@ -263,9 +263,11 @@ public:
 
     String basename_without_extension() const
     {
-        IO::MemoryWriter memory{basename().length()};
+        auto basename_with_extrension = basename();
 
-        IO::MemoryReader memory_reader{basename()};
+        IO::MemoryWriter memory{basename_with_extrension.length()};
+
+        IO::MemoryReader memory_reader{basename_with_extrension};
         IO::Scanner scan{memory_reader};
 
         // It's not a file extention it's an hidden file.
@@ -286,7 +288,7 @@ public:
 
     String dirname() const
     {
-        IO::MemoryWriter memory;
+        IO::MemoryWriter memory{};
 
         if (_absolute)
         {
@@ -301,7 +303,7 @@ public:
         {
             for (size_t i = 0; i < _elements.count() - 1; i++)
             {
-                memory.write(_elements[i]);
+                IO::write(memory, _elements[i]);
 
                 if (i != _elements.count() - 2)
                 {

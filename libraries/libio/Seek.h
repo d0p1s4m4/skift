@@ -35,9 +35,8 @@ struct SeekFrom
     }
 };
 
-class Seek
+struct Seek
 {
-public:
     virtual ResultOr<size_t> seek(SeekFrom from) = 0;
     virtual ResultOr<size_t> tell() = 0;
 

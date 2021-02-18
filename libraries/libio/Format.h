@@ -3,7 +3,7 @@
 #include <libio/Scanner.h>
 
 #include <libio/MemoryReader.h>
-#include <libio/Writer.h>
+#include <libio/Write.h>
 
 class String;
 
@@ -88,9 +88,8 @@ struct Formating
     }
 };
 
-class Format
+struct Format
 {
-public:
     virtual ResultOr<size_t> format(Writer &writer);
 };
 
@@ -119,7 +118,7 @@ static inline ResultOr<size_t> format(Writer &writer, Scanner &scanner)
 
     while (!scanner.ended())
     {
-        auto result = writer.write(scanner.current());
+        auto result = write(writer, scanner.current());
 
         if (result != SUCCESS)
         {
@@ -213,7 +212,7 @@ static inline ResultOr<size_t> format(Writer &writer, const char *fmt, Args... a
 
 static inline ResultOr<size_t> format(Writer &writer, const char *fmt)
 {
-    return writer.write(fmt);
+    return write(writer, fmt);
 }
 
 } // namespace IO

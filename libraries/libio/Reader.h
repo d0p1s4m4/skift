@@ -6,9 +6,8 @@
 namespace IO
 {
 
-class Reader
+struct Reader
 {
-public:
     virtual ResultOr<size_t> read(void *buffer, size_t size) = 0;
 
     virtual ResultOr<uint8_t> read_byte()
