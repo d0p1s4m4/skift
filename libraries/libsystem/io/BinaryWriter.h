@@ -1,6 +1,6 @@
 #pragma once
-#include <libsystem/Common.h>
-#include <libsystem/io/Writer.h>
+
+#include <libio/Writer.h>
 #include <libutils/String.h>
 
 class BinaryWriter : public Writer

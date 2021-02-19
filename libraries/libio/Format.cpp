@@ -2,6 +2,7 @@
 
 #include <libio/Format.h>
 #include <libio/NumberFormat.h>
+#include <libio/Write.h>
 
 namespace IO
 {
@@ -77,12 +78,12 @@ ResultOr<size_t> format(Writer &writer, const Formating &, double value)
 
 ResultOr<size_t> format(Writer &writer, const Formating &, const char *cstring)
 {
-    return writer.write(cstring);
+    return writer.write(cstring, strlen(cstring));
 }
 
 ResultOr<size_t> format(Writer &writer, const Formating &, const String string)
 {
-    return writer.write(string.cstring());
+    return write(writer, string);
 }
 
-} // namespace System
+} // namespace IO
