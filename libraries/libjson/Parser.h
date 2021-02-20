@@ -1,8 +1,11 @@
 #pragma once
 
+#include <libutils/Strings.h>
+
+#include <libio/Write.h>
+
 #include <libjson/EscapeSequence.h>
 #include <libjson/Value.h>
-#include <libutils/Strings.h>
 
 namespace Json
 {
@@ -33,11 +36,11 @@ inline String string(IO::Scanner &scan)
     {
         if (scan.current() == '\\')
         {
-            memory.write(escape_sequence(scan));
+            IO::write_cstring(memory, escape_sequence(scan));
         }
         else
         {
-            memory.write(scan.current());
+            IO::write_char(memory, scan.current());
             scan.forward();
         }
     }

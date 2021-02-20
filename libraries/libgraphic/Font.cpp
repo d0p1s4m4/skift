@@ -1,11 +1,12 @@
 #include <assert.h>
-#include <libgraphic/Font.h>
+#include <stdio.h>
+
+#include <libutils/HashMap.h>
 #include <libsystem/Logger.h>
 #include <libsystem/Path.h>
 #include <libsystem/Result.h>
-#include <libsystem/io/File.h>
-#include <libutils/HashMap.h>
-#include <stdio.h>
+#include <libsystem/io_new/File.h>
+#include <libgraphic/Font.h>
 
 static HashMap<String, RefPtr<Font>> _fonts;
 
@@ -16,7 +17,7 @@ static ResultOr<Vector<Glyph>> font_load_glyph(String name)
 
     Glyph *glyph_buffer = nullptr;
     size_t glyph_size = 0;
-    File glyph_file{glyph_path};
+    System::File glyph_file{glyph_path};
     Result result = glyph_file.read_all((void **)&glyph_buffer, &glyph_size);
 
     if (result != SUCCESS)
@@ -30,7 +31,7 @@ static ResultOr<Vector<Glyph>> font_load_glyph(String name)
 
 static ResultOr<RefPtr<Bitmap>> font_load_bitmap(String name)
 {
-    return Bitmap::load_from(String::format("/Files/Fonts/{}.png", name));
+    return Bitmap::load_from(IO::format("/Files/Fonts/{}.png", name));
 }
 
 ResultOr<RefPtr<Font>> Font::get(String name)

@@ -11,3 +11,4 @@ disks/
 *.ignored
 *.out
 *.d
+.idea/

@@ -2,10 +2,13 @@
 
 #include <abi/Filesystem.h>
 
-#include <libio/MemoryWriter.h>
-#include <libio/Scanner.h>
 #include <libutils/String.h>
 #include <libutils/Vector.h>
+
+#include <libio/MemoryReader.h>
+#include <libio/MemoryWriter.h>
+#include <libio/Scanner.h>
+#include <libio/Write.h>
 
 namespace System
 {
@@ -296,14 +299,14 @@ public:
         }
         else if (_elements.count() <= 1)
         {
-            memory.write(".");
+            memory.write('.');
         }
 
         if (_elements.count() >= 2)
         {
             for (size_t i = 0; i < _elements.count() - 1; i++)
             {
-                IO::write(memory, _elements[i]);
+                IO::write_string(memory, _elements[i]);
 
                 if (i != _elements.count() - 2)
                 {
@@ -332,11 +335,10 @@ public:
 
     String extension() const
     {
-        auto filename = basename();
+        IO::MemoryWriter memory{3};
+        IO::MemoryReader filename{basename().slice()};
 
-        StringBuilder builder{filename.length()};
-
-        StringScanner scan{filename.cstring(), filename.length()};
+        IO::Scanner scan{filename};
 
         // It's not a file extention it's an hidden file.
         if (scan.current_is("."))
@@ -351,11 +353,11 @@ public:
 
         while (scan.do_continue())
         {
-            builder.append(scan.current());
+            IO::write_char(memory, scan.current());
             scan.forward();
         }
 
-        return builder.finalize();
+        return memory.string();
     }
 
     Path parent(size_t index) const
@@ -384,7 +386,7 @@ public:
 
         for (size_t i = 0; i < _elements.count(); i++)
         {
-            memory.write(_elements[i]);
+            IO::write_string(memory, _elements[i]);
 
             if (i != _elements.count() - 1)
             {

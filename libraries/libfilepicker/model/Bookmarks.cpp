@@ -1,5 +1,5 @@
-#include <libio/File.h>
 #include <libjson/Json.h>
+#include <libsystem/io_new/File.h>
 
 #include <libfilepicker/model/Bookmarks.h>
 
@@ -17,7 +17,7 @@ void Bookmarks::add(Bookmark &&bookmark)
     did_update();
 }
 
-void Bookmarks::remove(const Path &path)
+void Bookmarks::remove(const System::Path &path)
 {
     for (size_t i = 0; i < _bookmarks.count(); i++)
     {
@@ -30,7 +30,7 @@ void Bookmarks::remove(const Path &path)
     }
 }
 
-bool Bookmarks::has(const Path &path) const
+bool Bookmarks::has(const System::Path &path) const
 {
     for (size_t i = 0; i < _bookmarks.count(); i++)
     {
@@ -45,7 +45,10 @@ bool Bookmarks::has(const Path &path) const
 
 RefPtr<Bookmarks> Bookmarks::load()
 {
-    auto raw_bookmarks = Json::parse_file("/Configs/file-manager/booksmark.json");
+    System::File config_file{"/Configs/file-manager/booksmark.json", OPEN_READ};
+    IO::Scanner scan{config_file};
+
+    auto raw_bookmarks = Json::parse(scan);
 
     auto bookmarks = make<Bookmarks>();
 
@@ -71,13 +74,10 @@ void Bookmarks::save()
         array.push_back(_bookmarks[i].serialize());
     }
 
-    Prettifier pretty;
-    Json::prettify(pretty, move(array));
-
-    auto data = pretty.finalize();
-
     System::File file{"/Configs/file-manager/booksmark.json", OPEN_WRITE | OPEN_CREATE};
-    file.write(data.cstring(), data.length());
+
+    IO::Prettifier pretty{file};
+    Json::prettify(pretty, move(array));
 }
 
 } // namespace filepicker

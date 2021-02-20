@@ -16,4 +16,21 @@ IndentPPDirectives: AfterHash
 
 # TODO: Activate this option when clang 12 comes out.
 # AllowShortEnumsOnASingleLine: true
+
+IncludeCategories:
+ - Regex: '^<libutils.*/'
+   Priority: 10
+   SortPriority: 10
+ - Regex: '^<libio.*/'
+   Priority: 20
+   SortPriority: 20
+ - Regex: '^<libsystem.*/'
+   Priority: 30
+   SortPriority: 30
+ - Regex: '^<libgraphic.*/'
+   Priority: 40
+   SortPriority: 40
+ - Regex: '^\".*\.h\"'
+   Priority: 50
+   SortPriority: 50
 ...

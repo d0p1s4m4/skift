@@ -3,10 +3,8 @@
 #include <libutils/Hash.h>
 #include <libutils/Move.h>
 #include <libutils/RefPtr.h>
+#include <libutils/Slice.h>
 #include <libutils/StringStorage.h>
-
-#include <libio/Format.h>
-#include <libio/MemoryWriter.h>
 
 class String :
     public RawStorage
@@ -15,15 +13,6 @@ private:
     RefPtr<StringStorage> _storage;
 
 public:
-    template <IO::Formatable... Args>
-    static String format(const char *fmt, Args... args)
-    {
-        IO::MemoryWriter memory{Slice{WRAP, fmt}};
-        IO::format(memory, fmt, forward<Args>(args)...);
-
-        return memory.string();
-    }
-
     size_t length() const
     {
         return _storage->size();

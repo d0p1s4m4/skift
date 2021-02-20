@@ -1,3 +1,5 @@
+#include <libsystem/io_new/File.h>
+
 #include "device-manager/DeviceModel.h"
 
 enum Column
@@ -66,7 +68,10 @@ Variant DeviceModel::data(int row, int column)
 
 void DeviceModel::update()
 {
-    _data = Json::parse_file("/System/devices");
+    System::File file{"/System/devices", OPEN_READ};
+    IO::Scanner scan{file};
+
+    _data = Json::parse(scan);
 
     did_update();
 }

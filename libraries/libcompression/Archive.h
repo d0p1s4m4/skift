@@ -6,27 +6,26 @@
 
 namespace Compression
 {
+struct Entry
+{
+    String name;
+    size_t uncompressed_size;
+    size_t compressed_size;
+    size_t archive_offset;
+    unsigned int compression;
+};
 
 class Archive : public RefCounted<Archive>
 {
 protected:
     Vector<Entry> _entries;
-    Path _path;
+    System::Path _path;
     bool _valid = true;
 
 public:
-    struct Entry
-    {
-        String name;
-        size_t uncompressed_size;
-        size_t compressed_size;
-        size_t archive_offset;
-        unsigned int compression;
-    };
+    static RefPtr<Archive> open(System::Path path, bool read = true);
 
-    static RefPtr<Archive> open(Path path, bool read = true);
-
-    Archive(Path path) : _path(path)
+    Archive(System::Path path) : _path(path)
     {
     }
 
@@ -35,10 +34,10 @@ public:
         return _entries;
     }
 
-    virtual Result extract(unsigned int entry_index, Writer &writer) = 0;
-    virtual Result insert(Reader &reader, const char *src_dir) = 0;
+    virtual Result extract(unsigned int entry_index, IO::Writer &writer) = 0;
+    virtual Result insert(IO::Reader &reader, const char *src_dir) = 0;
 
-    inline const Path &get_path()
+    inline const System::Path &get_path()
     {
         return _path;
     }

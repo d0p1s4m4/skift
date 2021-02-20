@@ -1,7 +1,7 @@
 #pragma once
 
-#include <libio/Prettifier.h>
 #include <libio/Format.h>
+#include <libio/Prettifier.h>
 
 #include <libjson/Value.h>
 
@@ -26,7 +26,7 @@ inline void prettify(IO::Prettifier &pretty, const Value &value)
 #endif
     else if (value.is(OBJECT))
     {
-        pretty.write('{');
+        IO::write_char(pretty, '{');
 
         if (value.length() > 0)
         {
@@ -41,9 +41,9 @@ inline void prettify(IO::Prettifier &pretty, const Value &value)
 
                 pretty.color_clear();
 
-                pretty.write(": ");
+                IO::write_cstring(pretty, ": ");
                 prettify(pretty, value);
-                pretty.write(',');
+                IO::write_char(pretty, ',');
 
                 return Iteration::CONTINUE;
             });
@@ -54,11 +54,11 @@ inline void prettify(IO::Prettifier &pretty, const Value &value)
         }
 
         pretty.ident();
-        pretty.write('}');
+        IO::write_char(pretty, '}');
     }
     else if (value.is(ARRAY))
     {
-        pretty.write('[');
+        IO::write_char(pretty, '[');
 
         if (value.length() > 0)
         {
@@ -68,7 +68,7 @@ inline void prettify(IO::Prettifier &pretty, const Value &value)
             {
                 pretty.ident();
                 prettify(pretty, value.get(i));
-                pretty.write(',');
+                IO::write_char(pretty, ',');
             }
 
             pretty.rewind(); // remove the last ","
@@ -77,7 +77,7 @@ inline void prettify(IO::Prettifier &pretty, const Value &value)
         }
 
         pretty.ident();
-        pretty.write(']');
+        IO::write_char(pretty, ']');
     }
     else
     {

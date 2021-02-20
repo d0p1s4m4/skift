@@ -1,8 +1,8 @@
 #include <assert.h>
+#include <string.h>
+
 #include <libjson/Json.h>
 #include <libsystem/Logger.h>
-#include <libsystem/io/Directory.h>
-#include <string.h>
 
 #include <libfilepicker/model/ArchiveListing.h>
 
@@ -19,7 +19,7 @@ enum Column
     __COLUMN_COUNT,
 };
 
-ArchiveListing::ArchiveListing(RefPtr<Navigation> navigation, RefPtr<Archive> archive)
+ArchiveListing::ArchiveListing(RefPtr<Navigation> navigation, RefPtr<Compression::Archive> archive)
     : _navigation(navigation), _archive(archive)
 {
     _observer = navigation->observe([this](auto &) {

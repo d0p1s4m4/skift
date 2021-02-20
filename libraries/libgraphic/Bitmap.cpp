@@ -7,9 +7,12 @@
 #undef LODEPNG_NO_COMPILE_DISK
 
 #include <assert.h>
+
+#include <libio/Read.h>
+
 #include <libsystem/Logger.h>
 #include <libsystem/Result.h>
-#include <libsystem/io/File.h>
+#include <libsystem/io_new/File.h>
 #include <libsystem/system/Memory.h>
 
 #include <libgraphic/Bitmap.h>
@@ -74,8 +77,8 @@ RefPtr<Bitmap> Bitmap::placeholder()
 
 ResultOr<RefPtr<Bitmap>> Bitmap::load_from(String path)
 {
-    File file{path};
-    auto result_or_read = file.read_all();
+    System::File file{path, OPEN_READ};
+    auto result_or_read = IO::read_slice(file);
 
     if (!result_or_read.success())
     {
@@ -147,8 +150,9 @@ Result Bitmap::save_to(String path)
         return ERR_BAD_IMAGE_FILE_FORMAT;
     }
 
-    File file{path};
-    return file.write_all(outbuffer, outbuffer_size);
+    IO::MemoryReader memory{outbuffer, outbuffer_size};
+    System::File file{path, OPEN_WRITE};
+    return IO::copy(memory, file);
 }
 
 Bitmap::~Bitmap()

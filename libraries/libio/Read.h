@@ -1,8 +1,8 @@
 #pragma once
 
+#include <libutils/Endian.h>
 #include <libutils/Slice.h>
 #include <libutils/String.h>
-#include <libutils/Endian.h>
 
 #include <libio/Copy.h>
 #include <libio/MemoryWriter.h>
@@ -15,7 +15,7 @@ template <typename T>
 inline ResultOr<T> read(Reader &reader)
 {
     T result;
-    auto read_result = reader.read(&result, sizeof(T).result();
+    auto read_result = reader.read(&result, sizeof(T)).result();
 
     if (read_result != SUCCESS)
     {
@@ -25,25 +25,51 @@ inline ResultOr<T> read(Reader &reader)
     return result;
 }
 
-static inline ResultOr<int8_t> read_int8(Reader &reader) { return read<int8_t>(reader); };
-static inline ResultOr<int16_t> read_int16(Reader &reader) { return read<int16_t>(reader); };
-static inline ResultOr<int32_t> read_int32(Reader &reader) { return read<int32_t>(reader); };
-static inline ResultOr<int64_t> read_int64(Reader &reader) { return read<int64_t>(reader); };
+template <typename T>
+inline ResultOr<T> read_little_endian(Reader &reader)
+{
+    auto value = read<LittleEndian<T>>(reader);
 
-static inline ResultOr<uint8_t> read_uint8(Reader &reader) { return read<uint8_t>(reader); };
-static inline ResultOr<uint16_t> read_uint16(Reader &reader) { return read<uint16_t>(reader); };
-static inline ResultOr<uint32_t> read_uint32(Reader &reader) { return read<uint32_t>(reader); };
-static inline ResultOr<uint64_t> read_uint64(Reader &reader) { return read<uint64_t>(reader); };
+    if (!value)
+    {
+        return value.result();
+    }
 
-static inline ResultOr<int8_t> read_le_int8(Reader &reader) { return read<le_int8_t>(reader); };
-static inline ResultOr<int16_t> read_le_int16(Reader &reader) { return read<le_int16_t>(reader); };
-static inline ResultOr<int32_t> read_le_int32(Reader &reader) { return read<le_int32_t>(reader); };
-static inline ResultOr<int64_t> read_le_int64(Reader &reader) { return read<le_int64_t>(reader); };
+    return (*value)();
+}
 
-static inline ResultOr<uint8_t> read_uint8(Reader &reader) { return read<uint8_t>(reader); };
-static inline ResultOr<uint16_t> read_uint16(Reader &reader) { return read<uint16_t>(reader); };
-static inline ResultOr<uint32_t> read_uint32(Reader &reader) { return read<uint32_t>(reader); };
-static inline ResultOr<uint64_t> read_uint64(Reader &reader) { return read<uint64_t>(reader); };
+template <typename T>
+inline ResultOr<T> read_big_endian(Reader &reader)
+{
+    auto value = read<BigEndian<T>>(reader);
+
+    if (!value)
+    {
+        return value.result();
+    }
+
+    return (*value)();
+}
+
+static inline ResultOr<int8_t> read_int8(Reader &reader) { return read<int8_t>(reader); }
+static inline ResultOr<int16_t> read_int16(Reader &reader) { return read<int16_t>(reader); }
+static inline ResultOr<int32_t> read_int32(Reader &reader) { return read<int32_t>(reader); }
+static inline ResultOr<int64_t> read_int64(Reader &reader) { return read<int64_t>(reader); }
+
+static inline ResultOr<uint8_t> read_uint8(Reader &reader) { return read<uint8_t>(reader); }
+static inline ResultOr<uint16_t> read_uint16(Reader &reader) { return read<uint16_t>(reader); }
+static inline ResultOr<uint32_t> read_uint32(Reader &reader) { return read<uint32_t>(reader); }
+static inline ResultOr<uint64_t> read_uint64(Reader &reader) { return read<uint64_t>(reader); }
+
+static inline ResultOr<int8_t> read_le_int8(Reader &reader) { return read_little_endian<int8_t>(reader); }
+static inline ResultOr<int16_t> read_le_int16(Reader &reader) { return read_little_endian<int16_t>(reader); }
+static inline ResultOr<int32_t> read_le_int32(Reader &reader) { return read_little_endian<int32_t>(reader); }
+static inline ResultOr<int64_t> read_le_int64(Reader &reader) { return read_little_endian<int64_t>(reader); }
+
+static inline ResultOr<uint8_t> read_be_uint8(Reader &reader) { return read_big_endian<uint8_t>(reader); }
+static inline ResultOr<uint16_t> read_be_uint16(Reader &reader) { return read_big_endian<uint16_t>(reader); }
+static inline ResultOr<uint32_t> read_be_uint32(Reader &reader) { return read_big_endian<uint32_t>(reader); }
+static inline ResultOr<uint64_t> read_be_uint64(Reader &reader) { return read_big_endian<uint64_t>(reader); }
 
 static inline ResultOr<Slice> read_slice(Reader &reader)
 {

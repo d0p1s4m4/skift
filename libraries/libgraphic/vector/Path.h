@@ -3,6 +3,7 @@
 #include <libutils/Rect.h>
 #include <libutils/Vector.h>
 
+#include <libio/MemoryReader.h>
 #include <libio/Scanner.h>
 
 #include <libgraphic/vector/Arc.h>

@@ -1,8 +1,7 @@
 #pragma once
 
-#include <libio/Scanner.h>
-
 #include <libio/MemoryReader.h>
+#include <libio/Scanner.h>
 #include <libio/Write.h>
 
 class String;
@@ -118,7 +117,7 @@ static inline ResultOr<size_t> format(Writer &writer, Scanner &scanner)
 
     while (!scanner.ended())
     {
-        auto result = write(writer, scanner.current());
+        auto result = write_char(writer, scanner.current());
 
         if (result != SUCCESS)
         {
@@ -139,7 +138,7 @@ static inline ResultOr<size_t> format(Writer &writer, Scanner &scanner, First fi
 
     while (!(scanner.ended() || scanner.current() == '{'))
     {
-        auto result = writer.write(scanner.current());
+        auto result = write_char(writer, scanner.current());
 
         if (result != SUCCESS)
         {
@@ -203,7 +202,7 @@ static inline ResultOr<size_t> format(Writer &writer, Scanner &scanner, First fi
 template <Formatable... Args>
 static inline ResultOr<size_t> format(Writer &writer, const char *fmt, Args... args)
 {
-    Slice slice{fmt, strlen(fmt)};
+    Slice slice{fmt};
     MemoryReader reader{slice};
     Scanner scan{reader};
 
@@ -212,7 +211,16 @@ static inline ResultOr<size_t> format(Writer &writer, const char *fmt, Args... a
 
 static inline ResultOr<size_t> format(Writer &writer, const char *fmt)
 {
-    return write(writer, fmt);
+    return write_cstring(writer, fmt);
+}
+
+template <IO::Formatable... Args>
+static inline String format(const char *fmt, Args... args)
+{
+    MemoryWriter memory{};
+    format(memory, fmt, forward<Args>(args)...);
+
+    return memory.string();
 }
 
 } // namespace IO

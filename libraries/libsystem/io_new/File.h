@@ -9,9 +9,9 @@ namespace System
 {
 
 class File final :
-    public Reader,
-    public Writer,
-    public Seek
+    public IO::Reader,
+    public IO::Writer,
+    public IO::Seek
 {
 private:
     System::Handle _handle;
@@ -28,7 +28,7 @@ public:
     ResultOr<size_t> read(void *buffer, size_t size) override;
     ResultOr<size_t> write(const void *buffer, size_t size) override;
 
-    ResultOr<size_t> seek(SeekFrom from) override;
+    ResultOr<size_t> seek(IO::SeekFrom from) override;
     ResultOr<size_t> tell() override;
 
     ResultOr<size_t> length() override;

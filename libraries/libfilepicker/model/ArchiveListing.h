@@ -7,7 +7,7 @@
 #include <libfilepicker/model/ArchiveEntryInfo.h>
 #include <libfilepicker/model/Navigation.h>
 
-#include <libfile/Archive.h>
+#include <libcompression/Archive.h>
 
 namespace filepicker
 {
@@ -16,12 +16,12 @@ class ArchiveListing : public TableModel
 {
 private:
     RefPtr<Navigation> _navigation;
-    RefPtr<Archive> _archive;
+    RefPtr<Compression::Archive> _archive;
     Vector<ArchiveEntryInfo> _entries{};
     OwnPtr<Observer<Navigation>> _observer;
 
 public:
-    ArchiveListing(RefPtr<Navigation> navigation, RefPtr<Archive> archive);
+    ArchiveListing(RefPtr<Navigation> navigation, RefPtr<Compression::Archive> archive);
 
     int rows() override;
 

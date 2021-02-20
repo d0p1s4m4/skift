@@ -1,9 +1,7 @@
 #include <string.h>
 
+#include <libio/NumberScanner.h>
 #include <libgraphic/Color.h>
-#include <libutils/NumberScanner.h>
-#include <libutils/Scanner.h>
-#include <libutils/ScannerUtils.h>
 
 struct ColorName
 {
@@ -18,21 +16,19 @@ static constexpr ColorName _color_names[] = {
 #undef __ENTRY
 };
 
-static void whitespace(Scanner &scan)
+static void whitespace(IO::Scanner &scan)
 {
     scan.eat(Strings::WHITESPACE);
 }
 
-static double number(Scanner &scan)
+static double number(IO::Scanner &scan)
 {
-    return scan_float(scan);
+    return *IO::NumberScanner::decimal().scan_float(scan);
 }
 
-Color Color::parse(String string)
+Color Color::parse(IO::Scanner &scan)
 {
-    StringScanner scan{string.cstring(), string.length()};
-
-    auto parse_component = [&](StringScanner &scan) {
+    auto parse_component = [&](IO::Scanner &scan) {
         whitespace(scan);
 
         auto value = number(scan);
@@ -127,7 +123,10 @@ Color Color::parse(String string)
             hex[7] = buffer[7];
         }
 
-        return from_hexa(parse_uint_inline(PARSER_HEXADECIMAL, hex, 0));
+        IO::MemoryReader memory{hex};
+        IO::Scanner scanner{memory};
+
+        return from_hexa(IO::NumberScanner::hexadecimal().scan_uint(scanner));
     }
     else if (scan.skip_word("rgb"))
     {
@@ -215,7 +214,7 @@ Color Color::parse(String string)
     {
         for (const auto &_color_name : _color_names)
         {
-            if (string == _color_name.name)
+            if (scan.current_is_word(_color_name.name))
             {
                 return _color_name.color;
             }

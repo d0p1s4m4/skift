@@ -1,9 +1,12 @@
 #pragma once
 
-#include <libio/Reader.h>
+#include <string.h>
+
 #include <libutils/InlineRingBuffer.h>
 #include <libutils/unicode/Codepoint.h>
-#include <string.h>
+
+#include <libio/Read.h>
+#include <libio/Reader.h>
 
 namespace IO
 {
@@ -11,7 +14,7 @@ namespace IO
 class Scanner final
 {
 private:
-    static constexpr int PEEK_SIZE = 16;
+    static constexpr int PEEK_SIZE = 64;
 
     Reader &_reader;
     utils::InlineRingBuffer<uint8_t, PEEK_SIZE> _peek{};
@@ -19,7 +22,7 @@ private:
 
     void refill()
     {
-        auto read_result = _reader.read_byte();
+        auto read_result = read<char>(_reader);
 
         if (!read_result)
         {

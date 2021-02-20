@@ -1,9 +1,10 @@
 #pragma once
 
-#include <libgraphic/ColorsNames.h>
-#include <libsystem/Common.h>
-#include <libsystem/math/Lerp.h>
 #include <libutils/String.h>
+#include <libio/MemoryReader.h>
+#include <libio/Scanner.h>
+#include <libsystem/math/Lerp.h>
+#include <libgraphic/ColorsNames.h>
 
 struct Color
 {
@@ -139,7 +140,15 @@ public:
         };
     }
 
-    static Color parse(String string);
+    static Color parse(String str)
+    {
+        IO::MemoryReader memory{str};
+        IO::Scanner scan{memory};
+
+        return parse(scan);
+    }
+
+    static Color parse(IO::Scanner &scan);
 
     static constexpr Color blend(Color fg, Color gb)
     {

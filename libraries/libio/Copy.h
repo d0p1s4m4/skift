@@ -5,6 +5,7 @@
 #include <libio/Reader.h>
 #include <libio/Writer.h>
 
+#include <libsystem/math/MinMax.h>
 namespace IO
 {
 

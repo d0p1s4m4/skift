@@ -10,7 +10,7 @@ namespace IO
 {
 
 template <typename T>
-static inline ResultOr<size_t> write(Writer &writer, T &what)
+static inline ResultOr<size_t> write_generic(Writer &writer, T &what)
 {
     return writer.write(&what, sizeof(T));
 }

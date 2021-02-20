@@ -62,7 +62,8 @@ private:
 public:
     constexpr LittleEndian() {}
 
-    constexpr LittleEndian(TValue value) : _value(swap_little_endian(value)) {}
+    constexpr LittleEndian(TValue value)
+        : _value(swap_little_endian(value)) {}
 
     constexpr TValue operator()() const
     {

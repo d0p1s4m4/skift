@@ -32,11 +32,11 @@ public:
     {
         if (_flags & INDENTS)
         {
-            write('\n');
+            write_char(_writer, '\n');
 
             for (int i = 0; i < _depth; i++)
             {
-                write("    ");
+                write_cstring(_writer, "    ");
             }
         }
     }
@@ -65,7 +65,7 @@ public:
                 "\e[96m",
             };
 
-            write(depth_color[_depth % 6]);
+            write_cstring(_writer, depth_color[_depth % 6]);
         }
     }
 
@@ -73,7 +73,7 @@ public:
     {
         if (_flags & COLORS)
         {
-            write("\e[m");
+            write_cstring(_writer, "\e[m");
         }
     }
 
@@ -105,7 +105,7 @@ public:
     {
         if (_buffer)
         {
-            auto write_result = _writer.write(*_buffer);
+            auto write_result = write_char(_writer, *_buffer);
 
             if (write_result)
             {

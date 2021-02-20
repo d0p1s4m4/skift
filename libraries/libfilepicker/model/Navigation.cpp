@@ -3,7 +3,7 @@
 namespace filepicker
 {
 
-Navigation::Navigation() : _current(Path::parse(""))
+Navigation::Navigation() : _current(System::Path::parse(""))
 {
 }
 
@@ -50,13 +50,13 @@ void Navigation::go_forward()
 void Navigation::go_home()
 {
     clear_forward();
-    navigate(Path::parse("/User"), BACKWARD);
+    navigate(System::Path::parse("/User"), BACKWARD);
 }
 
 void Navigation::go_home_dont_record_history()
 {
     clear_forward();
-    navigate(Path::parse("/User"), NONE);
+    navigate(System::Path::parse("/User"), NONE);
 }
 
 void Navigation::refresh()
@@ -66,20 +66,20 @@ void Navigation::refresh()
 
 void Navigation::navigate(String directory)
 {
-    navigate(Path::parse(directory));
+    navigate(System::Path::parse(directory));
 }
 
-void Navigation::navigate(Path path)
+void Navigation::navigate(System::Path path)
 {
     clear_forward();
     navigate(path, BACKWARD);
 }
 
-void Navigation::navigate(Path path, Direction record_history)
+void Navigation::navigate(System::Path path, Direction record_history)
 {
     if (path.relative())
     {
-        path = Path::join(_current, path);
+        path = System::Path::join(_current, path);
         path = path.normalized();
     }
 

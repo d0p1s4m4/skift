@@ -44,12 +44,12 @@ public:
             });
 
             value.with("path", [&](auto &value) {
-                _path = Path::parse(value.as_string());
+                _path = System::Path::parse(value.as_string());
             });
         }
     }
 
-    Bookmark(const String &name, const RefPtr<Icon> icon, const Path &path)
+    Bookmark(const String &name, const RefPtr<Icon> icon, const System::Path &path)
         : _name(name),
           _icon(icon),
           _path(path)

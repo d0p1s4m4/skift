@@ -1,9 +1,10 @@
 #include <assert.h>
 #include <string.h>
 
-#include <libio/Directory.h>
 #include <libjson/Json.h>
 #include <libsystem/Logger.h>
+#include <libsystem/io_new/Directory.h>
+#include <libsystem/io_new/File.h>
 
 #include <libfilepicker/model/DirectoryListing.h>
 
@@ -14,9 +15,11 @@ static auto get_icon_for_node(String current_directory, System::Directory::Entry
 {
     if (entry.stat.type == FILE_TYPE_DIRECTORY)
     {
-        auto manifest_path = String::format("{}/{}/manifest.json", current_directory, entry.name);
+        auto manifest_path = IO::format("{}/{}/manifest.json", current_directory, entry.name);
+        System::File manifest_file{manifest_path, OPEN_READ};
+        IO::Scanner scan{manifest_file};
 
-        auto root = Json::parse_file(manifest_path);
+        auto root = Json::parse(scan);
 
         if (root.is(Json::OBJECT))
         {

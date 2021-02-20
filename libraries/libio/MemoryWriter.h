@@ -21,7 +21,6 @@ private:
 
 public:
     using Writer::flush;
-    using Writer::write;
 
     MemoryWriter() : MemoryWriter(16)
     {
@@ -37,7 +36,7 @@ public:
         _used = 0;
     }
 
-    ~MemoryWriter() override
+    ~MemoryWriter()
     {
         if (_buffer)
         {
@@ -72,7 +71,7 @@ public:
         return make<SliceStorage>(ADOPT, (void *)result, size);
     }
 
-    ResultOr<size_t> write(uint8_t v) override
+    ResultOr<size_t> write(uint8_t v)
     {
         if (_size == 0)
         {
