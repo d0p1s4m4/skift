@@ -24,3 +24,42 @@ int raise(int sig)
         return -1;
     }
 }
+
+int sigemptyset(sigset_t *set)
+{
+    __unused(set);
+
+    return 0;
+}
+
+int sigsuspend(const sigset_t *set)
+{
+    __unused(set);
+
+    return 0;
+}
+
+int sigaction(int sig, const struct sigaction *s1, struct sigaction *s2)
+{
+    __unused(sig);
+    __unused(s1);
+    __unused(s2);
+
+    return 0;
+}
+
+int sigprocmask(int how, const sigset_t *set, sigset_t *oldset)
+{
+    __unused(set);
+    __unused(oldset);
+
+    switch (how)
+    {
+    case SIG_BLOCK:
+    case SIG_UNBLOCK:
+    case SIG_SETMASK:
+        return 0;
+    default:
+        return -1;
+    }
+}

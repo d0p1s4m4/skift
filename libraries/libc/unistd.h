@@ -8,6 +8,8 @@
 
 __BEGIN_HEADER
 
+#define _POSIX_VERSION 200112L /* IEEE Std 1003.1-2001 */
+
 extern char **environ;
 
 pid_t getpid(void);
@@ -87,7 +89,7 @@ char *getlogin(void);
 #define W_OK 2
 #define X_OK 1
 
-int gethostname(char *name, size_t len);
+/*int gethostname(char *name, size_t len);*/
 int sethostname(const char *name, size_t len);
 
 pid_t setsid(void);

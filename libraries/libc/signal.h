@@ -1,6 +1,7 @@
 #pragma once
 
 #include <__libc__.h>
+#include <sys/types.h>
 
 __BEGIN_HEADER
 
@@ -42,11 +43,20 @@ __BEGIN_HEADER
 #define SIGWINCH 28
 #define SIGUNUSED SIGSYS
 
+#define SIG_BLOCK 0
+#define SIG_UNBLOCK 1
+#define SIG_SETMASK 2
+
 typedef int sig_atomic_t;
+typedef unsigned long sigset_t;
 
 typedef void (*sighandler_t)(int);
 sighandler_t signal(int sig, sighandler_t handler);
 
 int raise(int sig);
+int sigemptyset(sigset_t *set);
+int sigsuspend(const sigset_t *set);
+int sigaction(int sig, const struct sigaction *s1, struct sigaction *s2);
+int sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
 
 __END_HEADER

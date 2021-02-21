@@ -18,6 +18,7 @@ __BEGIN_HEADER
 #define O_NONBLOCK 0x4000
 #define O_DIRECTORY 0x8000
 
+#define F_DUPFD 0
 #define F_GETFD 1
 #define F_SETFD 2
 

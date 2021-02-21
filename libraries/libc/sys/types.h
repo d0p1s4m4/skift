@@ -9,6 +9,8 @@ typedef int caddr_t;
 
 typedef unsigned short nlink_t;
 
+typedef long clock_t;
+
 typedef long off_t;
 typedef long time_t;
 
